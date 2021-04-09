@@ -25,8 +25,8 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           DefaultLogin(),
-          OtherLogin(),
           Register(),
+          OtherLogin()
         ],
       )),
     );
@@ -109,19 +109,6 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
           height: 2,
           color: BackgroundColor.colorSecondary,
         ),
-        MaterialButton(
-          height: 50,
-          minWidth: MediaQuery.of(context).size.width - 40,
-          color: BackgroundColor.colorFacebook,
-          child: Text(
-            "Facebook",
-            style: TextStyle(
-              color: TextColor.colorPrimary,
-              fontSize: TextSize.normal,
-            ),
-          ),
-          onPressed: controller.loginWithGoogle,
-        ),
         SizedBox(
           height: 10,
         ),
@@ -130,7 +117,7 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
           minWidth: MediaQuery.of(context).size.width - 40,
           color: BackgroundColor.colorGmail,
           child: Text(
-            "Login com o Google",
+            "Login com o Gmail",
             style: TextStyle(
               color: TextColor.colorPrimary,
               fontSize: TextSize.normal,

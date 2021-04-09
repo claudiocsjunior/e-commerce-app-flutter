@@ -1,7 +1,6 @@
 import 'package:e_commerce_app/app/shared/enums/Auth_status.dart';
 import 'package:e_commerce_app/app/shared/interfaces/auth_repository_interface.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
@@ -37,4 +36,17 @@ abstract class _AuthStoreBase with Store {
     await _authRepository.logOut();
     setUser(null);
   }
+
+  Future register(email, password) async {
+    try{
+      User user = await _authRepository.register(email:email, password: password);
+      setUser(user);
+      return user;
+    }catch(e){
+      throw e;
+    }
+
+  }
+
+
 }

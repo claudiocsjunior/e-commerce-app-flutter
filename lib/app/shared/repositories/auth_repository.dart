@@ -29,7 +29,7 @@ class AuthRepository implements IauthRepository{
 
   @override
   Future<User> getUser() async {
-    User user = FirebaseAuth.instance.currentUser;
+    User user = _auth.currentUser;
 
     if(user != null){
       if (!user.emailVerified) {
@@ -42,7 +42,36 @@ class AuthRepository implements IauthRepository{
 
   @override
   Future logOut() async{
-    await FirebaseAuth.instance.signOut();
+    await _auth.signOut();
+  }
+
+  @override
+  Future<User> getEmailLogin() {
+    // TODO: implement getEmailLogin
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<User> register({String email, String password}) async{
+    try {
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+          email: email,
+          password: password
+      );
+
+      final User user = userCredential.user;
+      return user;
+
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        throw Exception("A senha fornecida é muito fraca.");
+      } else if (e.code == 'email-already-in-use') {
+        throw Exception('A conta já existe para esse e-mail.');
+      }
+    } catch (e) {
+      print(e);
+      throw e;
+    }
   }
 
 }

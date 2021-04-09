@@ -24,6 +24,6 @@ abstract class _LoginStoreBase with Store {
   }
 
   void toRegister(){
-    Modular.to.pushReplacementNamed("/register");
+    Modular.to.pushNamed("/register");
   }
 }

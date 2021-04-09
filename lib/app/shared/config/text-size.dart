@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TextSize{
-  static final double small = 10;
-  static final double normal = 15;
-  static final double medium = 20;
-  static final double large = 25;
+  static final double small = 11;
+  static final double normal = 16;
+  static final double medium = 21;
+  static final double large = 26;
 }
