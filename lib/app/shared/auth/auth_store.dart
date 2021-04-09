@@ -45,7 +45,16 @@ abstract class _AuthStoreBase with Store {
     }catch(e){
       throw e;
     }
+  }
 
+  Future LoginEmailAndPassword(email, password) async {
+    try{
+      User user = await _authRepository.getEmailLogin(email:email, password: password);
+      setUser(user);
+      return user;
+    }catch(e){
+      throw e;
+    }
   }
 
 

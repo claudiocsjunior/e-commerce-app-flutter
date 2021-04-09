@@ -12,6 +12,30 @@ abstract class _LoginStoreBase with Store {
   @observable
   bool loading = false;
 
+  @observable
+  String email = "";
+
+  @observable
+  String password = "";
+
+  @observable
+  String erro = "";
+
+  @action
+  Future setEmail(String value){
+    email = value;
+  }
+
+  @action
+  Future setPassword(String value){
+    password = value;
+  }
+
+  @action
+  Future setErro(String value){
+    erro = value;
+  }
+
   @action
   Future loginWithGoogle() async {
     try{
@@ -25,5 +49,23 @@ abstract class _LoginStoreBase with Store {
 
   void toRegister(){
     Modular.to.pushNamed("/register");
+  }
+
+  @action
+  Future loginEmailAndPassword() async {
+    try{
+      loading = true;
+      await auth.LoginEmailAndPassword(email.trim(), password.trim());
+      if(auth.user == null){
+        setErro("Ocorreu um erro, tente novamente.");
+      }else{
+        Modular.to.pushReplacementNamed("/home");
+      }
+      loading = false;
+    }catch(e){
+      loading = false;
+      setErro(e.toString());
+    }
+
   }
 }

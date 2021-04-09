@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/app/modules/login/login_module.dart';
 import 'package:e_commerce_app/app/modules/register/register_module.dart';
 import 'package:e_commerce_app/app/shared/auth/auth_store.dart';
+import 'package:e_commerce_app/app/shared/guards/auth-guard.dart';
 import 'package:e_commerce_app/app/shared/interfaces/auth_repository_interface.dart';
 import 'package:e_commerce_app/app/shared/pages/splash/splash_page.dart';
 import 'package:e_commerce_app/app/shared/repositories/auth_repository.dart';
@@ -21,6 +22,6 @@ class AppModule extends Module {
     // ChildRoute("/", child: (_, args) => LoginModule()),
     ModuleRoute("/", module: LoginModule()),
     ModuleRoute("/register", module: RegisterModule()),
-    ModuleRoute("/home", module: HomeModule()),
+    ModuleRoute("/home", module: HomeModule(), guards: [AuthGuard()]),
   ];
 }

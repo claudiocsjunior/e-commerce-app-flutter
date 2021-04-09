@@ -46,17 +46,31 @@ class AuthRepository implements IauthRepository{
   }
 
   @override
-  Future<User> getEmailLogin() {
-    // TODO: implement getEmailLogin
-    throw UnimplementedError();
+  Future<User> getEmailLogin({String email, String password}) async{
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email.trim(),
+          password: password.trim()
+      );
+
+      final User user = userCredential.user;
+      return user;
+
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        throw Exception('Nenhum usuário encontrado para esse e-mail.');
+      } else if (e.code == 'wrong-password') {
+        throw Exception('Senha errada fornecida para esse usuário.');
+      }
+    }
   }
 
   @override
   Future<User> register({String email, String password}) async{
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-          email: email,
-          password: password
+          email: email.trim(),
+          password: password.trim()
       );
 
       final User user = userCredential.user;

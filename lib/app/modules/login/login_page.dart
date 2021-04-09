@@ -2,6 +2,7 @@ import 'package:e_commerce_app/app/shared/config/background-color.dart';
 import 'package:e_commerce_app/app/shared/config/text-color.dart';
 import 'package:e_commerce_app/app/shared/config/text-size.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'login_store.dart';
 
@@ -15,20 +16,27 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends ModularState<LoginPage, LoginStore> {
-  final _formkey = GlobalKey();
+  final _formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          DefaultLogin(),
-          Register(),
-          OtherLogin()
-        ],
-      )),
+        child: Observer(builder: (_){
+          if(!controller.loading){
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                DefaultLogin(),
+                OtherLogin(),
+                Register(),
+              ],
+            );
+          }else{
+            return CircularProgressIndicator();
+          }
+        })
+      ),
     );
   }
 
@@ -56,12 +64,18 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
                 hintText: "Email",
               ),
               validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Por favor, preencha o campo para continuar.';
+                bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);
+                if (value.length == 0) {
+                  return "Informe o Email";
+                } else if(!emailValid){
+                  return "Email inválido";
+                }else {
+                  return null;
                 }
 
                 return null;
               },
+              onChanged: (value) => controller.setEmail(value),
             ),
             TextFormField(
               obscureText: true,
@@ -71,12 +85,17 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
                 hintText: "Senha",
               ),
               validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Por favor, preencha o campo para continuar.';
+                if (value == null || value.isEmpty){
+                  return 'Informe a senha';
+                }
+
+                if (value.length < 6){
+                  return 'A senha deve conter ao menos 6 caracteres';
                 }
 
                 return null;
               },
+              onChanged: (value) => controller.setPassword(value),
             ),
             SizedBox(
               height: 10,
@@ -92,8 +111,32 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
                   fontSize: TextSize.normal,
                 ),
               ),
-              onPressed: controller.loginWithGoogle,
+              onPressed: (){
+                if (_formkey.currentState.validate()) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text('Aguarde')));
+                  controller.setErro("");
+                  controller.loginEmailAndPassword();
+                }
+              },
             ),
+            SizedBox(
+              height: 10,
+            ),
+            Observer(builder: (_) {
+              if (controller.erro.toString().length > 0) {
+                return Text(
+                  "${controller.erro.toString()}",
+                  style: TextStyle(
+                    color: TextColor.colorDanger,
+                    fontSize: TextSize.normal,
+                  ),
+                  textAlign: TextAlign.start,
+                );
+              }
+
+              return Container();
+            }),
           ],
         ),
       ),
@@ -106,7 +149,7 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
         Container(
           margin: EdgeInsets.only(bottom: 20, top: 20),
           width: MediaQuery.of(context).size.width - 40,
-          height: 2,
+          height: 1,
           color: BackgroundColor.colorSecondary,
         ),
         SizedBox(
@@ -143,8 +186,7 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
               style: TextStyle(
                   color: TextColor.colorPrimaryB,
                   fontSize: TextSize.normal,
-                  decoration: TextDecoration.underline
-              ),
+                  decoration: TextDecoration.underline),
             ),
           ),
         )
