@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "408693913898",
+    "project_id": "silicon-garage-310103",
+    "storage_bucket": "silicon-garage-310103.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:408693913898:android:9266c44dddfeea9385c653",
+        "android_client_info": {
+          "package_name": "com.example.e_commerce_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "408693913898-0e7a2h569s3qjq49aq9hbmqgsochsvmf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.e_commerce_app",
+            "certificate_hash": "d94bb6afd7704b363013fe2602b136da5de31f88"
+          }
+        },
+        {
+          "client_id": "408693913898-boojksjao9rlhr8gda1q7ollj5o8dq11.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6nLi9O-YJFBiyeRO76DkCKAnc_tSA2eA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "408693913898-boojksjao9rlhr8gda1q7ollj5o8dq11.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
