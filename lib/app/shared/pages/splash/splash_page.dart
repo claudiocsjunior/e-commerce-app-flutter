@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:e_commerce_app/app/shared/auth/auth_store.dart';
 import 'package:e_commerce_app/app/shared/enums/Auth_status.dart';
 import 'package:flutter/material.dart';
@@ -23,11 +25,13 @@ class SplashPageState extends State<SplashPage> {
 
     disposer = autorun((_) {
       final auth = Modular.get<AuthStore>();
-      if(auth.status == AuthStatus.login){
-        Modular.to.pushReplacementNamed("/home");
-      }else if(auth.status == AuthStatus.logoff){
-        Modular.to.pushReplacementNamed("/login");
-      }
+      Timer(Duration(seconds: 1), () {
+        if(auth.status == AuthStatus.login){
+          Modular.to.pushReplacementNamed("/home");
+        }else if(auth.status == AuthStatus.logoff){
+          Modular.to.pushReplacementNamed("/login");
+        }
+      });
     });
   }
 
@@ -40,9 +44,6 @@ class SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Center(
         child: CircularProgressIndicator(),
       ),

@@ -61,7 +61,6 @@ abstract class _LoginStoreBase with Store {
       }else{
         Modular.to.pushReplacementNamed("/home");
       }
-      loading = false;
     }catch(e){
       loading = false;
       setErro(e.toString());

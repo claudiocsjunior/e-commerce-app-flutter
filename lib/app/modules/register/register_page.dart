@@ -20,6 +20,15 @@ class RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title:  Text(
+          "CADASTRE-SE",
+          style: TextStyle(
+            color: TextColor.colorPrimary,
+          ),
+        ),
+      ),
       body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -45,13 +54,6 @@ class RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
         key: _formkey,
         child: Column(
           children: [
-            Text(
-              "CADASTRE-SE",
-              style: TextStyle(
-                color: TextColor.colorSecondary,
-                fontSize: TextSize.large,
-              ),
-            ),
             SizedBox(
               height: 10,
             ),
