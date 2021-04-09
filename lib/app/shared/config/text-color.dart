@@ -9,6 +9,7 @@ class TextColor{
   static final Color colorSuccess = Colors.lightGreen;
   static final Color colorPrimaryB = Colors.blue;
   static final Color colorSecondaryB = Colors.grey;
+  static final Color colorWarning = Colors.deepOrange;
 
 
   static final Color colorFacebook = Color(0xff385499);

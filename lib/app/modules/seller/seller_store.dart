@@ -20,4 +20,12 @@ abstract class _SellerStoreBase with Store {
     authStore.logOut();
     Modular.to.pushReplacementNamed("/");
   }
+
+  Future toHomePage(){
+    Modular.to.pushReplacementNamed("/seller");
+  }
+
+  Future toCategoty(){
+    Modular.to.pushNamed("/seller/category");
+  }
 }
