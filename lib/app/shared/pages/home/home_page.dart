@@ -1,8 +1,12 @@
 import 'dart:async';
 
+import 'package:e_commerce_app/app/modules/seller/seller_store.dart';
+import 'package:e_commerce_app/app/modules/seller/sellers/sellers_store.dart';
 import 'package:e_commerce_app/app/shared/auth/auth_store.dart';
 import 'package:e_commerce_app/app/shared/enums/Auth_status.dart';
 import 'package:e_commerce_app/app/shared/enums/type_user.dart';
+import 'package:e_commerce_app/app/shared/interfaces/seller_repository_interface.dart';
+import 'package:e_commerce_app/app/shared/models/seller_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -22,10 +26,12 @@ class HomePageState extends ModularState<HomePage, HomeStore> {
     super.initState();
 
     disposer = autorun((_) {
-      Timer(Duration(seconds: 1), () {
-        //TODO Verificar o tipo do usuário
+      Timer(Duration(seconds: 1), () async {
         AuthStore auth = Modular.get();
-        if(auth.user.uid == 'YfZ1XG2CU9UDRqIbge2EwlaCbaC3'){
+        ISellerRepository sellerRepository = Modular.get();
+        List<SellerModel> listSeller = await sellerRepository.getByEmail(auth.user.email);
+
+        if(listSeller.isNotEmpty){
           controller.setTypeUser(TypeUser.seller);
         }else{
           controller.setTypeUser(TypeUser.client);
@@ -36,6 +42,7 @@ class HomePageState extends ModularState<HomePage, HomeStore> {
         }else if(controller.typeUser == TypeUser.seller){
           Modular.to.pushReplacementNamed("/seller");
         }
+
       });
     });
   }

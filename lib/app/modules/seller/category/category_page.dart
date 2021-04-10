@@ -1,8 +1,8 @@
 import 'package:e_commerce_app/app/modules/seller/category/category_store.dart';
 import 'package:e_commerce_app/app/modules/seller/widgets/bottom-navigation/botton-navigation.dart';
-import 'package:e_commerce_app/app/modules/seller/widgets/bottom-navigation/logout.dart';
-import 'package:e_commerce_app/app/modules/seller/widgets/bottom-navigation/setting.dart';
-import 'package:e_commerce_app/app/modules/seller/widgets/bottom-navigation/users.dart';
+import 'package:e_commerce_app/app/modules/seller/widgets/logout/logout.dart';
+import 'package:e_commerce_app/app/modules/seller/widgets/settings/setting.dart';
+import 'package:e_commerce_app/app/modules/seller/widgets/users/users.dart';
 import 'package:e_commerce_app/app/shared/config/text-color.dart';
 import 'package:e_commerce_app/app/shared/config/text-size.dart';
 import 'package:e_commerce_app/app/shared/models/category_model.dart';

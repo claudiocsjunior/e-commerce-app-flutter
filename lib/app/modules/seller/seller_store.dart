@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/app/shared/auth/auth_store.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
@@ -26,6 +27,10 @@ abstract class _SellerStoreBase with Store {
   }
 
   Future toCategoty(){
-    Modular.to.pushNamed("/seller/category");
+    Modular.to.pushReplacementNamed("/seller/category");
+  }
+
+  Future toSellers(){
+    Modular.to.pushReplacementNamed("/seller/sellers");
   }
 }

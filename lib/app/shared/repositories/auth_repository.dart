@@ -31,11 +31,11 @@ class AuthRepository implements IauthRepository{
   Future<User> getUser() async {
     User user = _auth.currentUser;
 
-    if(user != null){
-      if (!user.emailVerified) {
-        await user.sendEmailVerification();
-      }
-    }
+    // if(user != null){
+    //   if (!user.emailVerified) {
+    //     await user.sendEmailVerification();
+    //   }
+    // }
 
     return user;
   }

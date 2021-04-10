@@ -3,10 +3,10 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../seller_store.dart';
 
-class Users extends StatelessWidget {
+class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return  IconButton(icon: Icon(Icons.group_add_outlined),
+    return  IconButton(icon: Icon(Icons.settings),
         onPressed: () => {});
-  }
+    }
 }

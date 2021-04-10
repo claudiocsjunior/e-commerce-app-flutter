@@ -1,5 +1,7 @@
 import 'package:e_commerce_app/app/shared/enums/Auth_status.dart';
 import 'package:e_commerce_app/app/shared/interfaces/auth_repository_interface.dart';
+import 'package:e_commerce_app/app/shared/interfaces/seller_repository_interface.dart';
+import 'package:e_commerce_app/app/shared/models/seller_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -10,6 +12,7 @@ class AuthStore = _AuthStoreBase with _$AuthStore;
 
 abstract class _AuthStoreBase with Store {
   final IauthRepository _authRepository = Modular.get();
+
 
   @observable
   User user = null;
