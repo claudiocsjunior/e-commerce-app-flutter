@@ -23,14 +23,14 @@ abstract class _SellerStoreBase with Store {
   }
 
   Future toHomePage(){
-    Modular.to.pushReplacementNamed("/seller");
+    Modular.to.popUntil(ModalRoute.withName('/seller/'));
   }
 
   Future toCategoty(){
-    Modular.to.pushReplacementNamed("/seller/category");
+    Modular.to.pushNamedAndRemoveUntil("/seller/category", ModalRoute.withName('/seller/'));
   }
 
   Future toSellers(){
-    Modular.to.pushReplacementNamed("/seller/sellers");
+    Modular.to.pushNamedAndRemoveUntil("/seller/sellers", ModalRoute.withName('/seller/'));
   }
 }
