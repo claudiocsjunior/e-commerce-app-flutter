@@ -158,7 +158,7 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
         MaterialButton(
           height: 50,
           minWidth: MediaQuery.of(context).size.width - 40,
-          color: BackgroundColor.colorGmail,
+          color: BackgroundColor.colorDanger,
           child: Text(
             "Login com o Gmail",
             style: TextStyle(

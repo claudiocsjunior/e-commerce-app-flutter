@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/app/modules/seller/sellers/sellers_page.dart';
 import 'package:e_commerce_app/app/modules/seller/sellers/sellers_store.dart';
+import 'package:e_commerce_app/app/modules/seller/settings/settings_page.dart';
 import 'package:e_commerce_app/app/modules/seller/settings/settings_store.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/app/modules/seller/category/category_page.dart';
@@ -30,5 +31,6 @@ class SellerModule extends Module {
     ChildRoute(Modular.initialRoute, child: (_, args) => HomePage()),
     ChildRoute("/category", child: (_, args) => CategoryPage()),
     ChildRoute("/sellers", child: (_, args) => SellersPage()),
+    ChildRoute("/settings", child: (_, args) => SettingsPage()),
   ];
 }

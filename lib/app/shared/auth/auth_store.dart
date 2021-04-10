@@ -13,7 +13,6 @@ class AuthStore = _AuthStoreBase with _$AuthStore;
 abstract class _AuthStoreBase with Store {
   final IauthRepository _authRepository = Modular.get();
 
-
   @observable
   User user = null;
 
@@ -55,6 +54,33 @@ abstract class _AuthStoreBase with Store {
       User user = await _authRepository.getEmailLogin(email:email, password: password);
       setUser(user);
       return user;
+    }catch(e){
+      throw e;
+    }
+  }
+
+  Future setName(String name) async {
+    try{
+      User user = await _authRepository.setName(name);
+      setUser(user);
+    }catch(e){
+      throw e;
+    }
+  }
+
+  Future setEmail(String email) async {
+    try{
+      User user = await _authRepository.setEmail(email);
+      setUser(user);
+    }catch(e){
+      throw e;
+    }
+  }
+
+  Future setPassword(String password) async {
+    try{
+      User user = await _authRepository.setPassword(password);
+      setUser(user);
     }catch(e){
       throw e;
     }

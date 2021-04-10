@@ -9,4 +9,9 @@ abstract class IauthRepository{
 
   Future<String> getToken();
   Future logOut();
+
+
+  Future<User> setName(String name);
+  Future<User> setEmail(String name);
+  Future<User> setPassword(String name);
 }

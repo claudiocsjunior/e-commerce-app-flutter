@@ -33,4 +33,8 @@ abstract class _SellerStoreBase with Store {
   Future toSellers(){
     Modular.to.pushNamedAndRemoveUntil("/seller/sellers", ModalRoute.withName('/seller/'));
   }
+
+  Future toSettings(){
+    Modular.to.pushNamedAndRemoveUntil("/seller/settings", ModalRoute.withName('/seller/'));
+  }
 }
