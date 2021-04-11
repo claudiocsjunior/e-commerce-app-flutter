@@ -1,5 +1,7 @@
 import 'package:e_commerce_app/app/modules/seller/category/category_store.dart';
+import 'package:e_commerce_app/app/modules/seller/enums/page-enum-bottom-nav.dart';
 import 'package:e_commerce_app/app/modules/seller/widgets/bottom-navigation/botton-navigation.dart';
+import 'package:e_commerce_app/app/modules/seller/widgets/dash-board/dash-board.dart';
 import 'package:e_commerce_app/app/modules/seller/widgets/logout/logout.dart';
 import 'package:e_commerce_app/app/modules/seller/widgets/settings/setting.dart';
 import 'package:e_commerce_app/app/modules/seller/widgets/users/users.dart';
@@ -21,29 +23,35 @@ class CategoryPage extends StatefulWidget {
 
 class CategoryPageState extends ModularState<CategoryPage, CategoryStore> {
   @override
+  void initState() {
+    super.initState();
+    preencherTela();
+  }
+
+  Future<bool> preencherTela() async {
+    await controller.getList();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Categorias"),
-        actions: [
-          Settings(),
-          Users(),
-          Logout(),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigation(
-        currentIndex: 1,
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: IconButton(
-          icon: Icon(
-            Icons.add,
-            color: TextColor.colorPrimary,
-          ),
-        ),
-        onPressed: () => _showDialog(null),
-      ),
+    return DashBoard(
+      title: "Categorias",
+      bottomNavigationindexSelected: PageEnumBottomNav.category.index,
+      floatingAction: true,
+      functionFloatingAction: () => _showDialog(null),
       body: Observer(builder: (_) {
+        if (controller.categoryList == null) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        if (controller.categoryList.data == null) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
         if (controller.categoryList.hasError) {
           return Center(
             child: ElevatedButton(
@@ -53,12 +61,6 @@ class CategoryPageState extends ModularState<CategoryPage, CategoryStore> {
                 style: TextStyle(fontSize: TextSize.normal),
               ),
             ),
-          );
-        }
-
-        if (controller.categoryList.data == null) {
-          return Center(
-            child: CircularProgressIndicator(),
           );
         }
 

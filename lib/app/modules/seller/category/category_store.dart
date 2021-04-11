@@ -9,14 +9,14 @@ abstract class _CategoryStoreBase with Store {
   final ICategoryRepository repository;
 
   _CategoryStoreBase(this.repository){
-    getList();
+    //getList();
   }
 
   @observable
   ObservableStream<List<CategoryModel>> categoryList;
 
   @action
-  getList(){
+  getList() {
     categoryList = repository.getAll().asObservable();
   }
 
