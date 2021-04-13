@@ -9,14 +9,6 @@ class SellerStore = _SellerStoreBase with _$SellerStore;
 abstract class _SellerStoreBase with Store {
   AuthStore authStore = Modular.get();
 
-  @observable
-  int value = 0;
-
-  @action
-  void increment() {
-    value++;
-  }
-
   Future LogOut(){
     authStore.logOut();
     Modular.to.pushReplacementNamed("/");
@@ -36,5 +28,9 @@ abstract class _SellerStoreBase with Store {
 
   Future toSettings(){
     Modular.to.pushNamedAndRemoveUntil("/seller/settings", ModalRoute.withName('/seller/'));
+  }
+
+  Future toProduct(){
+    Modular.to.pushNamedAndRemoveUntil("/seller/product", ModalRoute.withName('/seller/'));
   }
 }

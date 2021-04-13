@@ -29,6 +29,7 @@ class CategoryPageState extends ModularState<CategoryPage, CategoryStore> {
   }
 
   Future<bool> preencherTela() async {
+    await Future.delayed(Duration(seconds: 1));
     await controller.getList();
   }
 

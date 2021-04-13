@@ -37,7 +37,7 @@ class BottomNavigation extends StatelessWidget {
             icon: Icon(Icons.shopping_cart),
             onPressed: Modular
                 .get<SellerStore>()
-                .toCategoty,
+                .toProduct,
           ),
           label: "Produtos",
         ),

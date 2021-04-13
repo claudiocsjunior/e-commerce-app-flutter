@@ -9,18 +9,18 @@ part of 'product_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ProductStore on _ProductStoreBase, Store {
-  final _$valueAtom = Atom(name: '_ProductStoreBase.value');
+  final _$productListAtom = Atom(name: '_ProductStoreBase.productList');
 
   @override
-  int get value {
-    _$valueAtom.reportRead();
-    return super.value;
+  ObservableStream<List<ProductModel>> get productList {
+    _$productListAtom.reportRead();
+    return super.productList;
   }
 
   @override
-  set value(int value) {
-    _$valueAtom.reportWrite(value, super.value, () {
-      super.value = value;
+  set productList(ObservableStream<List<ProductModel>> value) {
+    _$productListAtom.reportWrite(value, super.productList, () {
+      super.productList = value;
     });
   }
 
@@ -28,11 +28,11 @@ mixin _$ProductStore on _ProductStoreBase, Store {
       ActionController(name: '_ProductStoreBase');
 
   @override
-  void increment() {
+  dynamic getList() {
     final _$actionInfo = _$_ProductStoreBaseActionController.startAction(
-        name: '_ProductStoreBase.increment');
+        name: '_ProductStoreBase.getList');
     try {
-      return super.increment();
+      return super.getList();
     } finally {
       _$_ProductStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -41,7 +41,7 @@ mixin _$ProductStore on _ProductStoreBase, Store {
   @override
   String toString() {
     return '''
-value: ${value}
+productList: ${productList}
     ''';
   }
 }
