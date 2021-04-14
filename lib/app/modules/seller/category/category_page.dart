@@ -62,6 +62,13 @@ class CategoryPageState extends ModularState<CategoryPage, CategoryStore> {
 
         List<CategoryModel> listCategory = controller.categoryList.data;
 
+        if (listCategory.length == 0) {
+          return Center(
+              child: Text("Nenhuma categoria cadastrada", style: TextStyle(color: TextColor.colorSecondaryB),)
+          );
+        }
+
+
         return ListView.builder(
             itemCount: listCategory.length,
             itemBuilder: (_, index) {

@@ -34,6 +34,7 @@ class _DashBoardState extends State<DashBoard> {
       bottomNavigationBar: BottomNavigation(
         currentIndex: widget.bottomNavigationindexSelected,
       ),
+
       body: widget.body,
     );
   }

@@ -113,8 +113,6 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
               ),
               onPressed: (){
                 if (_formkey.currentState.validate()) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text('Aguarde')));
                   controller.setErro("");
                   controller.loginEmailAndPassword();
                 }

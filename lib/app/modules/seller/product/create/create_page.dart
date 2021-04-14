@@ -4,6 +4,7 @@ import 'package:e_commerce_app/app/shared/config/background-color.dart';
 import 'package:e_commerce_app/app/shared/config/text-color.dart';
 import 'package:e_commerce_app/app/shared/config/text-size.dart';
 import 'package:e_commerce_app/app/shared/models/category_model.dart';
+import 'package:e_commerce_app/app/shared/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -286,9 +287,6 @@ class CreatePageState extends ModularState<CreatePage, CreateStore> {
                     }
 
                     if (_formkey.currentState.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Aguarde')));
-
                       controller.saveProduct();
                     }
                   },

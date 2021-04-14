@@ -22,14 +22,6 @@ abstract class _ProductStoreBase with Store {
     productList = repository.getAll().asObservable();
   }
 
-  Future save(ProductModel productModel) async{
-    if(productModel.reference != null){
-      await repository.update(productModel);
-    }else{
-      await repository.save(productModel);
-    }
-  }
-
   Future delete(ProductModel productModel) async{
     return repository.delete(productModel);
   }

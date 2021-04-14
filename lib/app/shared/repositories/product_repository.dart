@@ -47,7 +47,7 @@ class ProductRepository implements IProductRepository {
   }
 
   @override
-  Future delete(ProductModel categoryModel) {
-    // return categoryModel.reference.delete();
+  Future delete(ProductModel productModel) {
+    return productModel.reference.delete();
   }
 }
