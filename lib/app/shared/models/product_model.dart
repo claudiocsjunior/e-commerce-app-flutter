@@ -6,8 +6,7 @@ class ProductModel {
   String description;
   String name;
   String photo;
-  var price;
-  String size;
+  double price;
   DocumentReference reference;
   CategoryModel categoryModel;
 
@@ -15,7 +14,6 @@ class ProductModel {
       {this.categoryReference,
       this.description,
       this.name,
-      this.size,
       this.photo,
       this.price,
       this.reference,
@@ -27,7 +25,6 @@ class ProductModel {
         description: doc['description'],
         categoryReference: doc['categoryReference'],
         name: doc['name'],
-        size: doc['size'],
         photo: doc['photo'],
         price: doc['price'],
         reference: doc.reference,

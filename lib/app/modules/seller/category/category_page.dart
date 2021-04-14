@@ -25,12 +25,7 @@ class CategoryPageState extends ModularState<CategoryPage, CategoryStore> {
   @override
   void initState() {
     super.initState();
-    preencherTela();
-  }
-
-  Future<bool> preencherTela() async {
-    await Future.delayed(Duration(seconds: 1));
-    await controller.getList();
+    controller.initValues();
   }
 
   @override

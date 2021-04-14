@@ -1,5 +1,7 @@
 import 'package:e_commerce_app/app/shared/interfaces/product_repository_interface.dart';
 import 'package:e_commerce_app/app/shared/models/product_model.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 part 'product_store.g.dart';
@@ -30,6 +32,16 @@ abstract class _ProductStoreBase with Store {
 
   Future delete(ProductModel productModel) async{
     return repository.delete(productModel);
+  }
+
+  Future toCreateProduct(){
+    Modular.to.pushNamed("/seller/product/create");
+  }
+
+
+  Future<bool> initValues() async {
+    await Future.delayed(Duration(seconds: 1));
+    await getList();
   }
 
 }

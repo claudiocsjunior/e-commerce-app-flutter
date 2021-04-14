@@ -32,4 +32,9 @@ abstract class _CategoryStoreBase with Store {
     return repository.delete(categoryModel);
   }
 
+  Future<bool> initValues() async {
+    await Future.delayed(Duration(seconds: 1));
+    await getList();
+  }
+
 }

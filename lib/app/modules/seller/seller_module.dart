@@ -18,7 +18,7 @@ class SellerModule extends Module {
     ChildRoute(Modular.initialRoute, child: (_, args) => SellerPage()),
     ModuleRoute("/settings", module: SettingsModule()),
     ModuleRoute("/sellers", module: SellersModule()),
-    ModuleRoute("/category", module: CategoryModule()),
-    ModuleRoute("/product", module: ProductModule()),
+    ModuleRoute("/category", module: CategoryModule(), transition: TransitionType.noTransition),
+    ModuleRoute("/product", module: ProductModule(), transition: TransitionType.noTransition),
   ];
 }

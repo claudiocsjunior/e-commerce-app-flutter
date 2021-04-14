@@ -18,12 +18,7 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
   @override
   void initState() {
     super.initState();
-    preencherTela();
-  }
-
-  Future<bool> preencherTela() async {
-    await Future.delayed(Duration(seconds: 1));
-    await controller.getList();
+    controller.initValues();
   }
 
   @override
@@ -32,7 +27,7 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
       title: "Produtos",
       bottomNavigationindexSelected: PageEnumBottomNav.product.index,
       floatingAction: true,
-      functionFloatingAction: () => () {},
+      functionFloatingAction: controller.toCreateProduct,
       body: Observer(builder: (_) {
         if (controller.productList == null) {
           return Center(
@@ -71,7 +66,7 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
                   style: TextStyle(fontSize: TextSize.normal),
                 ),
                 subtitle: Text(
-                  "Categoria: " + productModel.categoryModel.description,
+                  productModel.categoryModel.description,
                   style: TextStyle(fontSize: TextSize.normal),
                 ),
                 leading: IconButton(
