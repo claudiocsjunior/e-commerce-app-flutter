@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../seller_store.dart';
 
@@ -49,10 +50,24 @@ abstract class _CreateStoreBase with Store {
   }
 
   @action
+  Future setProductModel(ProductModel value) {
+    productModel = value;
+  }
+
+  @action
   Future getImageGalery() async{
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
     image = File(pickedFile.path);
+  }
+
+  @action
+  Future getImageProductEdit(ProductModel productModel) async{
+    Directory tempDir = await getTemporaryDirectory();
+    String tempPath = tempDir.path;
+    var filePath = tempPath + '/file_01.tmp';
+
+    image = await File(filePath).writeAsBytes(base64Decode(productModel.photo));
   }
 
   @action
@@ -89,6 +104,15 @@ abstract class _CreateStoreBase with Store {
   }
 
   @action
+  Future setCategorySelectedEdit(ProductModel productModel, List<CategoryModel> categories) {
+    categories.forEach((CategoryModel element) {
+      if(element.reference.id == productModel.categoryModel.reference.id){
+        categorySelected = element;
+      }
+    });
+  }
+
+  @action
   Future saveProduct() async{
     try{
       loading = true;
@@ -96,7 +120,13 @@ abstract class _CreateStoreBase with Store {
       String base64 = base64Encode(bytesImage);
       productModel.categoryModel = categorySelected;
       productModel.photo = base64;
-      await productRepository.save(productModel);
+
+      if(productModel.reference == null){
+        await productRepository.save(productModel);
+      }else{
+        await productRepository.update(productModel);
+      }
+
       loading = false;
       error = "";
       Modular.get<SellerStore>().toProduct();

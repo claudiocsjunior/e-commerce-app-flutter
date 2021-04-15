@@ -13,8 +13,9 @@ import 'create_store.dart';
 
 class CreatePage extends StatefulWidget {
   final String title;
+  final ProductModel product;
 
-  const CreatePage({Key key, this.title = "CreatePage"}) : super(key: key);
+  const CreatePage({this.product = null, Key key, this.title = "CreatePage"}) : super(key: key);
 
   @override
   CreatePageState createState() => CreatePageState();
@@ -22,6 +23,16 @@ class CreatePage extends StatefulWidget {
 
 class CreatePageState extends ModularState<CreatePage, CreateStore> {
   final _formkey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    if(widget.product != null){
+      controller.setProductModel(widget.product);
+      controller.getImageProductEdit(widget.product);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +69,7 @@ class CreatePageState extends ModularState<CreatePage, CreateStore> {
           child: Observer(builder: (_) {
             if (controller.image == null) {
               return Text(
-                "Nenhum imagem selecionada",
+                "Nenhuma imagem selecionada",
                 style: TextStyle(
                   fontSize: TextSize.normal,
                 ),
@@ -151,10 +162,13 @@ class CreatePageState extends ModularState<CreatePage, CreateStore> {
 
             List<CategoryModel> listCategory = controller.categoryList.data;
 
+            if(widget.product != null){
+              controller.setCategorySelectedEdit(widget.product, listCategory);
+            }
+
             return DropdownButton<CategoryModel>(
-              value: controller.categorySelected,
               hint: Text("Selecione a categoria",
-                  style: TextStyle(color: BackgroundColor.colorPrimary)
+                  style: TextStyle(color: BackgroundColor.colorPrimary, fontSize: TextSize.normal)
               ),
               icon: RotatedBox(
                   quarterTurns: 1,
@@ -173,9 +187,10 @@ class CreatePageState extends ModularState<CreatePage, CreateStore> {
               items: listCategory.map<DropdownMenuItem<CategoryModel>>((CategoryModel categoryModel) {
                 return DropdownMenuItem<CategoryModel>(
                   value: categoryModel,
-                  child: Text(categoryModel.description),
+                  child: Text(categoryModel.description, style: TextStyle(fontSize: TextSize.normal)),
                 );
               }).toList(),
+              value: controller.categorySelected,
             );
           }),
           Observer(builder: (_) {
@@ -233,7 +248,7 @@ class CreatePageState extends ModularState<CreatePage, CreateStore> {
               margin: EdgeInsets.only(top: 20),
               child: TextFormField(
                 keyboardType: TextInputType.number,
-                initialValue: controller.productModel.description,
+                initialValue: controller.productModel.price != null ? controller.productModel.price.toString() : null,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   icon: Icon(Icons.monetization_on_rounded),
@@ -267,7 +282,7 @@ class CreatePageState extends ModularState<CreatePage, CreateStore> {
                   MediaQuery.of(context).size.width - 40,
                   color: BackgroundColor.colorSuccess,
                   child: Text(
-                    "Finalizar",
+                    widget.product != null ? "Alterar" : "Finalizar",
                     style: TextStyle(
                       color: TextColor.colorPrimary,
                       fontSize: TextSize.normal,

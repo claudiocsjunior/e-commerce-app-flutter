@@ -24,18 +24,11 @@ mixin _$ProductStore on _ProductStoreBase, Store {
     });
   }
 
-  final _$_ProductStoreBaseActionController =
-      ActionController(name: '_ProductStoreBase');
+  final _$getListAsyncAction = AsyncAction('_ProductStoreBase.getList');
 
   @override
-  dynamic getList() {
-    final _$actionInfo = _$_ProductStoreBaseActionController.startAction(
-        name: '_ProductStoreBase.getList');
-    try {
-      return super.getList();
-    } finally {
-      _$_ProductStoreBaseActionController.endAction(_$actionInfo);
-    }
+  Future getList() {
+    return _$getListAsyncAction.run(() => super.getList());
   }
 
   @override

@@ -18,8 +18,8 @@ abstract class _ProductStoreBase with Store {
   ObservableStream<List<ProductModel>> productList;
 
   @action
-  getList() {
-    productList = repository.getAll().asObservable();
+  getList() async{
+       productList = repository.getAll(null).asObservable();
   }
 
   Future delete(ProductModel productModel) async{
@@ -28,6 +28,10 @@ abstract class _ProductStoreBase with Store {
 
   Future toCreateProduct(){
     Modular.to.pushNamed("/seller/product/create");
+  }
+
+  Future toEditProduct(ProductModel productModel){
+    Modular.to.pushNamed("/seller/product/edit", arguments: productModel);
   }
 
 

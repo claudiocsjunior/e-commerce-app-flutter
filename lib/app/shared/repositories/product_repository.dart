@@ -10,9 +10,15 @@ class ProductRepository implements IProductRepository {
   ProductRepository(this.firestore);
 
   @override
-  Stream<List<ProductModel>> getAll() async* {
-    var productsStream =
-        firestore.collection("product").orderBy("name").snapshots();
+  Stream<List<ProductModel>> getAll(var productModel) async* {
+    var productsStream;
+    if(productModel == null){
+      productsStream = firestore.collection("product").orderBy("name").limit(10).snapshots();
+    }else{
+      DocumentSnapshot lastProductSnapshot = await firestore.collection("product").doc(productModel.reference.id).get();
+      productsStream = firestore.collection("product").orderBy("name").startAfterDocument(lastProductSnapshot).limit(10).snapshots();
+    }
+
     var products = List<ProductModel>();
     await for (var productSnapshot in productsStream) {
       for (var productDoc in productSnapshot.docs) {
@@ -42,8 +48,14 @@ class ProductRepository implements IProductRepository {
   }
 
   @override
-  Future update(ProductModel categoryModel) {
-    // categoryModel.reference.update({'description': categoryModel.description});
+  Future update(ProductModel productModel) {
+    productModel.reference.update({
+    'name': productModel.name,
+    'description': productModel.description,
+    'photo': productModel.photo,
+    'price': productModel.price,
+    'categoryReference': productModel.categoryModel.reference
+    });
   }
 
   @override

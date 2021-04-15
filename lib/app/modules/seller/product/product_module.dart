@@ -23,5 +23,6 @@ class ProductModule extends Module {
   final List<ModularRoute> routes = [
     ChildRoute(Modular.initialRoute, child: (_, args) => ProductPage()),
     ChildRoute("/create", child: (_, args) => CreatePage()),
+    ChildRoute("/edit", child: (_, args) => CreatePage(product: args.data)),
   ];
 }

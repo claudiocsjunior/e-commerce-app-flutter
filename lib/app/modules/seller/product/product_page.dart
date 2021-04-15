@@ -21,10 +21,25 @@ class ProductPage extends StatefulWidget {
 }
 
 class ProductPageState extends ModularState<ProductPage, ProductStore> {
+
+  ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
     controller.initValues();
+
+    _scrollController.addListener(() {
+      if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
+        controller.getList();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -50,7 +65,7 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
         if (controller.productList.hasError) {
           return Center(
             child: ElevatedButton(
-              onPressed: controller.getList(),
+              onPressed: controller.getList,
               child: Text(
                 "Tente novamente",
                 style: TextStyle(fontSize: TextSize.normal),
@@ -71,6 +86,7 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
 
         return ListView.builder(
             itemCount: listProduct.length,
+            controller: _scrollController,
             itemBuilder: (_, index) {
               ProductModel productModel = listProduct[index];
 
@@ -110,19 +126,31 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
                   children: [
                     Container(
                       margin: EdgeInsets.all(20),
-                      child: Text(productModel.name, style: TextStyle(fontSize: TextSize.large)),
+                      child: Text(productModel.name,
+                          style: TextStyle(fontSize: TextSize.large)),
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 20, left: 20, right: 20),
-                      child: Text(productModel.description, style: TextStyle(fontSize: TextSize.normal, color: TextColor.colorSecondaryB)),
+                      child: Text(productModel.description,
+                          style: TextStyle(
+                              fontSize: TextSize.normal,
+                              color: TextColor.colorSecondaryB)),
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 10, left: 20, right: 20),
-                      child: Text("Categoria: " + productModel.categoryModel.description, style: TextStyle(fontSize: TextSize.normal, color: TextColor.colorSecondaryB)),
+                      child: Text(
+                          "Categoria: " +
+                              productModel.categoryModel.description,
+                          style: TextStyle(
+                              fontSize: TextSize.normal,
+                              color: TextColor.colorSecondaryB)),
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 10, left: 20, right: 20),
-                      child: Text("Preço: " + productModel.price.toString(), style: TextStyle(fontSize: TextSize.normal, color: TextColor.colorSecondaryB)),
+                      child: Text("Preço: " + productModel.price.toString(),
+                          style: TextStyle(
+                              fontSize: TextSize.normal,
+                              color: TextColor.colorSecondaryB)),
                     ),
                   ],
                 ),
@@ -138,7 +166,10 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
                       color: TextColor.colorWarning,
                     ),
                     title: new Text('Editar'),
-                    onTap: () => {}),
+                    onTap: () {
+                      Modular.to.pop();
+                      controller.toEditProduct(productModel);
+                    }),
                 ListTile(
                   leading: new Icon(
                     Icons.delete_forever,

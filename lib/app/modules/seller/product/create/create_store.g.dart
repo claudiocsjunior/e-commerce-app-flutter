@@ -108,6 +108,15 @@ mixin _$CreateStore on _CreateStoreBase, Store {
     return _$getImageGaleryAsyncAction.run(() => super.getImageGalery());
   }
 
+  final _$getImageProductEditAsyncAction =
+      AsyncAction('_CreateStoreBase.getImageProductEdit');
+
+  @override
+  Future<dynamic> getImageProductEdit(ProductModel productModel) {
+    return _$getImageProductEditAsyncAction
+        .run(() => super.getImageProductEdit(productModel));
+  }
+
   final _$getImageCameraAsyncAction =
       AsyncAction('_CreateStoreBase.getImageCamera');
 
@@ -132,6 +141,17 @@ mixin _$CreateStore on _CreateStoreBase, Store {
         name: '_CreateStoreBase.getListCategory');
     try {
       return super.getListCategory();
+    } finally {
+      _$_CreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  Future<dynamic> setProductModel(ProductModel value) {
+    final _$actionInfo = _$_CreateStoreBaseActionController.startAction(
+        name: '_CreateStoreBase.setProductModel');
+    try {
+      return super.setProductModel(value);
     } finally {
       _$_CreateStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -187,6 +207,18 @@ mixin _$CreateStore on _CreateStoreBase, Store {
         name: '_CreateStoreBase.setCategorySelected');
     try {
       return super.setCategorySelected(value);
+    } finally {
+      _$_CreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  Future<dynamic> setCategorySelectedEdit(
+      ProductModel productModel, List<CategoryModel> categories) {
+    final _$actionInfo = _$_CreateStoreBaseActionController.startAction(
+        name: '_CreateStoreBase.setCategorySelectedEdit');
+    try {
+      return super.setCategorySelectedEdit(productModel, categories);
     } finally {
       _$_CreateStoreBaseActionController.endAction(_$actionInfo);
     }
