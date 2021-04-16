@@ -32,6 +32,10 @@ class CategoryRepository implements ICategoryRepository{
     return categoryModel.reference.delete();
   }
 
+  @override
+  Future getByReference(DocumentReference documentReference){
+    return firestore.collection("category").doc(documentReference.id).get();
+  }
 
 
 

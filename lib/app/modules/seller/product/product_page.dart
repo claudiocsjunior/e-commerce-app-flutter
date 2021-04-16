@@ -24,6 +24,8 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
 
   ScrollController _scrollController = ScrollController();
 
+  final snackBarLoading = SnackBar(content: Text('Carregando...'));
+
   @override
   void initState() {
     super.initState();
@@ -31,6 +33,7 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
 
     _scrollController.addListener(() {
       if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
+        ScaffoldMessenger.of(context).showSnackBar(snackBarLoading);
         controller.getList();
       }
     });
@@ -50,33 +53,13 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
       floatingAction: true,
       functionFloatingAction: controller.toCreateProduct,
       body: Observer(builder: (_) {
-        if (controller.productList == null) {
+        if (controller.loading) {
           return Center(
             child: CircularProgressIndicator(),
           );
         }
 
-        if (controller.productList.data == null) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
-        if (controller.productList.hasError) {
-          return Center(
-            child: ElevatedButton(
-              onPressed: controller.getList,
-              child: Text(
-                "Tente novamente",
-                style: TextStyle(fontSize: TextSize.normal),
-              ),
-            ),
-          );
-        }
-
-        List<ProductModel> listProduct = controller.productList.data;
-
-        if (listProduct.length == 0) {
+        if (controller.products.length == 0) {
           return Center(
               child: Text(
             "Nenhum produto cadastrado",
@@ -85,10 +68,10 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
         }
 
         return ListView.builder(
-            itemCount: listProduct.length,
+            itemCount: controller.products.length,
             controller: _scrollController,
             itemBuilder: (_, index) {
-              ProductModel productModel = listProduct[index];
+              ProductModel productModel = controller.products[index];
 
               return ListTile(
                 title: Text(

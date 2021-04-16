@@ -16,7 +16,7 @@ class ProductModule extends Module {
     Bind.lazySingleton<ICategoryRepository>((i) => CategoryRepository(FirebaseFirestore.instance)),
     Bind.lazySingleton<IProductRepository>((i) => ProductRepository(FirebaseFirestore.instance)),
     Bind.lazySingleton((i) => CreateStore(i.get<IProductRepository>(), i.get<ICategoryRepository>())),
-    Bind.lazySingleton((i) => ProductStore(i.get<IProductRepository>())),
+    Bind.lazySingleton((i) => ProductStore(i.get<IProductRepository>(), i.get<ICategoryRepository>())),
   ];
 
   @override

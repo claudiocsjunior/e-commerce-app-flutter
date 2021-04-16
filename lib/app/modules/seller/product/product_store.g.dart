@@ -9,18 +9,48 @@ part of 'product_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ProductStore on _ProductStoreBase, Store {
-  final _$productListAtom = Atom(name: '_ProductStoreBase.productList');
+  final _$loadingAtom = Atom(name: '_ProductStoreBase.loading');
 
   @override
-  ObservableStream<List<ProductModel>> get productList {
-    _$productListAtom.reportRead();
-    return super.productList;
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
   }
 
   @override
-  set productList(ObservableStream<List<ProductModel>> value) {
-    _$productListAtom.reportWrite(value, super.productList, () {
-      super.productList = value;
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
+  final _$productsAtom = Atom(name: '_ProductStoreBase.products');
+
+  @override
+  ObservableList<ProductModel> get products {
+    _$productsAtom.reportRead();
+    return super.products;
+  }
+
+  @override
+  set products(ObservableList<ProductModel> value) {
+    _$productsAtom.reportWrite(value, super.products, () {
+      super.products = value;
+    });
+  }
+
+  final _$lastProductAtom = Atom(name: '_ProductStoreBase.lastProduct');
+
+  @override
+  ProductModel get lastProduct {
+    _$lastProductAtom.reportRead();
+    return super.lastProduct;
+  }
+
+  @override
+  set lastProduct(ProductModel value) {
+    _$lastProductAtom.reportWrite(value, super.lastProduct, () {
+      super.lastProduct = value;
     });
   }
 
@@ -34,7 +64,9 @@ mixin _$ProductStore on _ProductStoreBase, Store {
   @override
   String toString() {
     return '''
-productList: ${productList}
+loading: ${loading},
+products: ${products},
+lastProduct: ${lastProduct}
     ''';
   }
 }
