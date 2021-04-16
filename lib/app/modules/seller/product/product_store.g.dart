@@ -27,13 +27,13 @@ mixin _$ProductStore on _ProductStoreBase, Store {
   final _$productsAtom = Atom(name: '_ProductStoreBase.products');
 
   @override
-  ObservableList<ProductModel> get products {
+  List<ProductModel> get products {
     _$productsAtom.reportRead();
     return super.products;
   }
 
   @override
-  set products(ObservableList<ProductModel> value) {
+  set products(List<ProductModel> value) {
     _$productsAtom.reportWrite(value, super.products, () {
       super.products = value;
     });

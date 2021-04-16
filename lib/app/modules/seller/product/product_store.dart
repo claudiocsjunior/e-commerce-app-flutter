@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/app/shared/interfaces/category_repository_interface.dart';
 import 'package:e_commerce_app/app/shared/interfaces/product_repository_interface.dart';
@@ -6,6 +9,7 @@ import 'package:e_commerce_app/app/shared/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:async';
 
@@ -24,7 +28,7 @@ abstract class _ProductStoreBase with Store {
   bool loading = true;
 
   @observable
-  ObservableList<ProductModel> products;
+  List<ProductModel> products;
 
   @observable
   ProductModel lastProduct;
@@ -33,10 +37,10 @@ abstract class _ProductStoreBase with Store {
   getList() async{
     if(products == null){
       loading = true;
-      products = ObservableList<ProductModel>();
+      products = List<ProductModel>();
     }
 
-    ObservableList<ProductModel> productsList = ObservableList<ProductModel>();
+    List<ProductModel> productsList = List<ProductModel>();
 
     QuerySnapshot querySnapshot = await repository.getAllPaginate(lastProduct);
       for (var productDoc in querySnapshot.docs) {
@@ -44,6 +48,13 @@ abstract class _ProductStoreBase with Store {
         DocumentSnapshot categorySnapshot = await categoryRepository.getByReference(categoryReference);
         ProductModel product = ProductModel.fromDocument(productDoc, CategoryModel.fromDocument(categorySnapshot));
         productsList.add(product);
+
+        Directory tempDir = await getTemporaryDirectory();
+        String tempPath = tempDir.path;
+        var filePath = tempPath + '/'+ product.reference.id;
+
+        product.image = await File(filePath).writeAsBytes(base64Decode(product.photo));
+        //tempDir.deleteSync(recursive: true);
 
         lastProduct = productsList.last;
       }

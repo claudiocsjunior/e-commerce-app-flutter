@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/app/shared/models/category_model.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ProductModel {
   DocumentReference categoryReference;
@@ -13,6 +14,7 @@ class ProductModel {
   double price;
   DocumentReference reference;
   CategoryModel categoryModel;
+  File image;
 
   ProductModel(
       {this.categoryReference,
@@ -21,7 +23,8 @@ class ProductModel {
       this.photo,
       this.price,
       this.reference,
-      this.categoryModel
+      this.categoryModel,
+        this.image
       });
 
   factory ProductModel.fromDocument(DocumentSnapshot doc, CategoryModel categoryModel) {
@@ -32,7 +35,8 @@ class ProductModel {
         photo: doc['photo'],
         price: doc['price'],
         reference: doc.reference,
-        categoryModel: categoryModel);
+        categoryModel: categoryModel,
+        image: null);
   }
 }
 

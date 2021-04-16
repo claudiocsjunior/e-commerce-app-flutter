@@ -21,10 +21,18 @@ class ProductPage extends StatefulWidget {
 }
 
 class ProductPageState extends ModularState<ProductPage, ProductStore> {
+  ScrollController _scrollController = ScrollController(
+    initialScrollOffset: 10, // or whatever offset you wish
+    keepScrollOffset: true,
+  );
 
-  ScrollController _scrollController = ScrollController();
-
-  final snackBarLoading = SnackBar(content: Text('Carregando...'));
+  final snackBarLoading = SnackBar(
+      duration: Duration(milliseconds: 300),
+      content: Container(
+          alignment: Alignment.center,
+          height: 30,
+          width: 5,
+          child: CircularProgressIndicator()));
 
   @override
   void initState() {
@@ -32,7 +40,8 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
     controller.initValues();
 
     _scrollController.addListener(() {
-      if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
         ScaffoldMessenger.of(context).showSnackBar(snackBarLoading);
         controller.getList();
       }
@@ -68,6 +77,7 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
         }
 
         return ListView.builder(
+            shrinkWrap: true,
             itemCount: controller.products.length,
             controller: _scrollController,
             itemBuilder: (_, index) {
@@ -82,7 +92,10 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
                   productModel.categoryModel.description,
                   style: TextStyle(fontSize: TextSize.normal),
                 ),
-                leading: Image.memory(base64Decode(productModel.photo)),
+                leading: Image.file(
+                  productModel.image,
+                  fit: BoxFit.fill,
+                ),
                 trailing: IconButton(
                   icon: Icon(
                     Icons.more_vert,
