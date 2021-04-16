@@ -46,7 +46,7 @@ class BottomNavigation extends StatelessWidget {
             icon: Icon(Icons.my_library_books),
             onPressed: Modular
                 .get<SellerStore>()
-                .toHomePage,
+                .toStock,
           ),
           label: "Estoque",
         ),

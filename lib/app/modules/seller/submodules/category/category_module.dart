@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/app/modules/seller/category/category_page.dart';
-import 'package:e_commerce_app/app/modules/seller/category/category_store.dart';
 import 'package:e_commerce_app/app/shared/interfaces/category_repository_interface.dart';
 import 'package:e_commerce_app/app/shared/repositories/category_repository.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
+
+import 'category_page.dart';
+import 'category_store.dart';
 
 class CategoryModule extends Module {
   @override

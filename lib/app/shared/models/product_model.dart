@@ -15,6 +15,7 @@ class ProductModel {
   DocumentReference? reference;
   CategoryModel? categoryModel;
   File? image;
+  int quantity ;
 
   ProductModel(
       {this.categoryReference,
@@ -24,7 +25,8 @@ class ProductModel {
       this.price,
       this.reference,
       this.categoryModel,
-        this.image
+      this.image,
+      this.quantity = 0
       });
 
   factory ProductModel.fromDocument(DocumentSnapshot doc, CategoryModel categoryModel) {
@@ -36,7 +38,19 @@ class ProductModel {
         price: doc['price'],
         reference: doc.reference,
         categoryModel: categoryModel,
-        image: null);
+        image: null,
+        quantity: doc['quantity']);
   }
+
+  processImage() async {
+    Directory tempDir = await getTemporaryDirectory();
+    String tempPath = tempDir.path;
+    var filePath = tempPath + '/'+ this.reference!.id;
+
+    this.image = await File(filePath).writeAsBytes(base64Decode(this.photo!));
+
+    return this;
+  }
+
 }
 

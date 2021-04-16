@@ -1,5 +1,5 @@
-import 'package:e_commerce_app/app/modules/seller/settings/settings_page.dart';
-import 'package:e_commerce_app/app/modules/seller/settings/settings_store.dart';
+import 'package:e_commerce_app/app/modules/seller/submodules/settings/settings_page.dart';
+import 'package:e_commerce_app/app/modules/seller/submodules/settings/settings_store.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
 

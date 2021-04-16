@@ -10,30 +10,18 @@ class ProductRepository implements IProductRepository {
   ProductRepository(this.firestore);
 
   @override
-  Stream<List<ProductModel?>> getAll(var productModel) async* {
-    var productsStream;
-    if(productModel == null){
-      productsStream = firestore.collection("product").orderBy("name").limit(10).snapshots();
-    }else{
-      DocumentSnapshot lastProductSnapshot = await firestore.collection("product").doc(productModel.reference.id).get();
-      productsStream = firestore.collection("product").orderBy("name").startAfterDocument(lastProductSnapshot).limit(10).snapshots();
-    }
-
-    List<ProductModel?> products = List.generate(0, (index) => null);
-    await for (var productSnapshot in productsStream) {
-      for (var productDoc in productSnapshot.docs) {
-        ProductModel product;
-        DocumentReference categoryReference = productDoc['categoryReference'];
-        DocumentSnapshot categorySnapshot = await firestore
-            .collection("category")
-            .doc(categoryReference.id)
-            .get();
-        product = ProductModel.fromDocument(
-            productDoc, CategoryModel.fromDocument(categorySnapshot));
-        products.add(product);
-      }
-      yield products;
-    }
+  Stream<List<ProductModel?>> getAll() {
+    return firestore.collection('product').orderBy('name').snapshots().map((query) {
+      return query.docs.map((doc) {
+        ProductModel productModel = ProductModel.fromDocument(doc, CategoryModel());
+        // productModel.processImage().then(
+        //     (value){
+        //       return value;
+        //     }
+        // );
+        return productModel;
+      }).toList();
+    });
   }
 
   @override
@@ -43,7 +31,8 @@ class ProductRepository implements IProductRepository {
       'description': productModel.description,
       'photo': productModel.photo,
       'price': productModel.price,
-      'categoryReference': productModel.categoryModel!.reference
+      'categoryReference': productModel.categoryModel!.reference,
+      'quantity': productModel.quantity
     });
   }
 
@@ -54,9 +43,12 @@ class ProductRepository implements IProductRepository {
     'description': productModel.description,
     'photo': productModel.photo,
     'price': productModel.price,
-    'categoryReference': productModel.categoryModel!.reference
+    'categoryReference': productModel.categoryModel!.reference,
+    'quantity': productModel.quantity
     });
   }
+
+
 
   @override
   Future delete(ProductModel productModel) {
@@ -75,4 +67,12 @@ class ProductRepository implements IProductRepository {
 
     return productsStream;
   }
+
+  @override
+  Future updateQuantity(ProductModel productModel) async{
+    await productModel.reference!.update({
+      'quantity': productModel.quantity
+    });
+  }
+
 }

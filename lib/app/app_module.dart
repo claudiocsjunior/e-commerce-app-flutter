@@ -10,12 +10,9 @@ import 'package:e_commerce_app/app/shared/interfaces/auth_repository_interface.d
 import 'package:e_commerce_app/app/shared/pages/splash/splash_page.dart';
 import 'package:e_commerce_app/app/shared/repositories/auth_repository.dart';
 import 'package:e_commerce_app/app/shared/repositories/seller_repository.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:e_commerce_app/app/modules/seller/seller_module.dart';
 import 'package:e_commerce_app/app/modules/client/client_module.dart';
-
-import 'modules/seller/sellers/sellers_store.dart';
 
 class AppModule extends Module {
   @override

@@ -1,5 +1,5 @@
-import 'package:e_commerce_app/app/modules/seller/sellers/sellers_page.dart';
-import 'package:e_commerce_app/app/modules/seller/sellers/sellers_store.dart';
+import 'package:e_commerce_app/app/modules/seller/submodules/sellers/sellers_page.dart';
+import 'package:e_commerce_app/app/modules/seller/submodules/sellers/sellers_store.dart';
 import 'package:e_commerce_app/app/shared/interfaces/seller_repository_interface.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';

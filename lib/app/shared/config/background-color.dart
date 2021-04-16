@@ -9,6 +9,7 @@ class BackgroundColor{
   static final Color colorSuccess = Colors.lightGreen;
   static final Color colorPrimaryB = Colors.lightBlue;
   static final Color colorSecondary = Colors.grey;
+  static final Color colorWhite = Colors.white;
 
 
   static final Color colorFacebook = Color(0xff385499);

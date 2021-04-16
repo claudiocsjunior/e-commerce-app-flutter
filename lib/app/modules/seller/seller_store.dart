@@ -33,4 +33,8 @@ abstract class _SellerStoreBase with Store {
   toProduct(){
     Modular.to.pushNamedAndRemoveUntil("/seller/product", ModalRoute.withName('/seller/'));
   }
+
+  toStock(){
+    Modular.to.pushNamedAndRemoveUntil("/seller/stock", ModalRoute.withName('/seller/'));
+  }
 }

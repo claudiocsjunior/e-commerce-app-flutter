@@ -1,9 +1,5 @@
 import 'dart:async';
-
-import 'package:e_commerce_app/app/modules/seller/seller_store.dart';
-import 'package:e_commerce_app/app/modules/seller/sellers/sellers_store.dart';
 import 'package:e_commerce_app/app/shared/auth/auth_store.dart';
-import 'package:e_commerce_app/app/shared/enums/Auth_status.dart';
 import 'package:e_commerce_app/app/shared/enums/type_user.dart';
 import 'package:e_commerce_app/app/shared/interfaces/seller_repository_interface.dart';
 import 'package:e_commerce_app/app/shared/models/seller_model.dart';

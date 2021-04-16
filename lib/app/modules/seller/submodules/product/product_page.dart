@@ -1,7 +1,5 @@
-import 'dart:convert';
-
 import 'package:e_commerce_app/app/modules/seller/enums/page-enum-bottom-nav.dart';
-import 'package:e_commerce_app/app/modules/seller/product/product_store.dart';
+import 'package:e_commerce_app/app/modules/seller/submodules/product/product_store.dart';
 import 'package:e_commerce_app/app/modules/seller/widgets/dash-board/dash-board.dart';
 import 'package:e_commerce_app/app/shared/config/background-color.dart';
 import 'package:e_commerce_app/app/shared/config/text-color.dart';
@@ -27,12 +25,13 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
   );
 
   final snackBarLoading = SnackBar(
-      duration: Duration(milliseconds: 500),
+      backgroundColor: BackgroundColor.colorWhite,
+      duration: Duration(seconds: 1),
       content: Container(
           alignment: Alignment.center,
-          height: 30,
-          width: 5,
-          child: CircularProgressIndicator()));
+          height: 50,
+          width: 20,
+          child: RefreshProgressIndicator()));
 
   @override
   void initState() {
@@ -66,15 +65,15 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
           Container(
             height: 100,
             margin: EdgeInsets.symmetric(horizontal: 20),
-            child:           Observer(builder: (_) {
+            child: Observer(builder: (_) {
               return Container(
                 margin: EdgeInsets.only(top: 20),
                 child: TextFormField(
                   initialValue: controller.search,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    icon: Icon(Icons.search),
-                    hintText: "Nome",
+                    icon: Icon(Icons.filter_alt),
+                    hintText: "Filtrar por...",
                   ),
                   onChanged: (value) => controller.setSearch(value),
                 ),
@@ -91,7 +90,7 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
             if (controller.computedProducts.length == 0) {
               return Center(
                   child: Text(
-                "Nenhum produto cadastrado",
+                "Nenhum produto encontrado",
                 style: TextStyle(color: TextColor.colorSecondaryB),
               ));
             }
@@ -101,7 +100,8 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
                 itemCount: controller.computedProducts.length,
                 controller: _scrollController,
                 itemBuilder: (_, index) {
-                  ProductModel productModel = controller.computedProducts[index]!;
+                  ProductModel productModel =
+                      controller.computedProducts[index]!;
 
                   return ListTile(
                     title: Text(
@@ -112,10 +112,12 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
                       productModel.categoryModel!.description,
                       style: TextStyle(fontSize: TextSize.normal),
                     ),
-                    leading: Image.file(
-                      productModel.image!,
-                      fit: BoxFit.fill,
-                    ),
+                    leading: Container(
+                        width: 60,
+                        child: Image.file(
+                          productModel.image!,
+                          fit: BoxFit.fill,
+                        )),
                     trailing: IconButton(
                       icon: Icon(
                         Icons.more_vert,

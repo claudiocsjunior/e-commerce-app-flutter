@@ -11,7 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../seller_store.dart';
+import '../../../seller_store.dart';
 
 part 'create_store.g.dart';
 

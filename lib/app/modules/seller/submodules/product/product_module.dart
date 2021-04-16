@@ -1,14 +1,15 @@
-import 'package:e_commerce_app/app/modules/seller/product/create/create_page.dart';
-import 'package:e_commerce_app/app/modules/seller/product/create/create_store.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/app/modules/seller/product/product_page.dart';
-import 'package:e_commerce_app/app/modules/seller/product/product_store.dart';
+import 'package:e_commerce_app/app/modules/seller/submodules/product/product_page.dart';
+import 'package:e_commerce_app/app/modules/seller/submodules/product/product_store.dart';
 import 'package:e_commerce_app/app/shared/interfaces/category_repository_interface.dart';
 import 'package:e_commerce_app/app/shared/interfaces/product_repository_interface.dart';
 import 'package:e_commerce_app/app/shared/repositories/category_repository.dart';
 import 'package:e_commerce_app/app/shared/repositories/product_repository.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
+
+import 'create/create_page.dart';
+import 'create/create_store.dart';
 
 class ProductModule extends Module {
   @override
