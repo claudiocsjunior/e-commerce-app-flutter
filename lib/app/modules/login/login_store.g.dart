@@ -90,7 +90,7 @@ mixin _$LoginStore on _LoginStoreBase, Store {
       ActionController(name: '_LoginStoreBase');
 
   @override
-  Future<dynamic> setEmail(String value) {
+  dynamic setEmail(String value) {
     final _$actionInfo = _$_LoginStoreBaseActionController.startAction(
         name: '_LoginStoreBase.setEmail');
     try {
@@ -101,7 +101,7 @@ mixin _$LoginStore on _LoginStoreBase, Store {
   }
 
   @override
-  Future<dynamic> setPassword(String value) {
+  dynamic setPassword(String value) {
     final _$actionInfo = _$_LoginStoreBaseActionController.startAction(
         name: '_LoginStoreBase.setPassword');
     try {
@@ -112,7 +112,7 @@ mixin _$LoginStore on _LoginStoreBase, Store {
   }
 
   @override
-  Future<dynamic> setErro(String value) {
+  dynamic setErro(String value) {
     final _$actionInfo = _$_LoginStoreBaseActionController.startAction(
         name: '_LoginStoreBase.setErro');
     try {

@@ -12,13 +12,13 @@ mixin _$CreateStore on _CreateStoreBase, Store {
   final _$imageAtom = Atom(name: '_CreateStoreBase.image');
 
   @override
-  File get image {
+  File? get image {
     _$imageAtom.reportRead();
     return super.image;
   }
 
   @override
-  set image(File value) {
+  set image(File? value) {
     _$imageAtom.reportWrite(value, super.image, () {
       super.image = value;
     });
@@ -27,13 +27,13 @@ mixin _$CreateStore on _CreateStoreBase, Store {
   final _$errorAtom = Atom(name: '_CreateStoreBase.error');
 
   @override
-  String get error {
+  String? get error {
     _$errorAtom.reportRead();
     return super.error;
   }
 
   @override
-  set error(String value) {
+  set error(String? value) {
     _$errorAtom.reportWrite(value, super.error, () {
       super.error = value;
     });
@@ -72,13 +72,13 @@ mixin _$CreateStore on _CreateStoreBase, Store {
   final _$categoryListAtom = Atom(name: '_CreateStoreBase.categoryList');
 
   @override
-  ObservableStream<List<CategoryModel>> get categoryList {
+  ObservableStream<List<CategoryModel>>? get categoryList {
     _$categoryListAtom.reportRead();
     return super.categoryList;
   }
 
   @override
-  set categoryList(ObservableStream<List<CategoryModel>> value) {
+  set categoryList(ObservableStream<List<CategoryModel>>? value) {
     _$categoryListAtom.reportWrite(value, super.categoryList, () {
       super.categoryList = value;
     });
@@ -88,13 +88,13 @@ mixin _$CreateStore on _CreateStoreBase, Store {
       Atom(name: '_CreateStoreBase.categorySelected');
 
   @override
-  CategoryModel get categorySelected {
+  CategoryModel? get categorySelected {
     _$categorySelectedAtom.reportRead();
     return super.categorySelected;
   }
 
   @override
-  set categorySelected(CategoryModel value) {
+  set categorySelected(CategoryModel? value) {
     _$categorySelectedAtom.reportWrite(value, super.categorySelected, () {
       super.categorySelected = value;
     });
@@ -147,7 +147,7 @@ mixin _$CreateStore on _CreateStoreBase, Store {
   }
 
   @override
-  Future<dynamic> setProductModel(ProductModel value) {
+  dynamic setProductModel(ProductModel value) {
     final _$actionInfo = _$_CreateStoreBaseActionController.startAction(
         name: '_CreateStoreBase.setProductModel');
     try {
@@ -158,7 +158,7 @@ mixin _$CreateStore on _CreateStoreBase, Store {
   }
 
   @override
-  Future<dynamic> setName(dynamic value) {
+  dynamic setName(dynamic value) {
     final _$actionInfo = _$_CreateStoreBaseActionController.startAction(
         name: '_CreateStoreBase.setName');
     try {
@@ -169,7 +169,7 @@ mixin _$CreateStore on _CreateStoreBase, Store {
   }
 
   @override
-  Future<dynamic> setError(dynamic value) {
+  dynamic setError(dynamic value) {
     final _$actionInfo = _$_CreateStoreBaseActionController.startAction(
         name: '_CreateStoreBase.setError');
     try {
@@ -180,7 +180,7 @@ mixin _$CreateStore on _CreateStoreBase, Store {
   }
 
   @override
-  Future<dynamic> setDescription(dynamic value) {
+  dynamic setDescription(dynamic value) {
     final _$actionInfo = _$_CreateStoreBaseActionController.startAction(
         name: '_CreateStoreBase.setDescription');
     try {
@@ -191,7 +191,7 @@ mixin _$CreateStore on _CreateStoreBase, Store {
   }
 
   @override
-  Future<dynamic> setPrice(double value) {
+  dynamic setPrice(double value) {
     final _$actionInfo = _$_CreateStoreBaseActionController.startAction(
         name: '_CreateStoreBase.setPrice');
     try {
@@ -202,7 +202,7 @@ mixin _$CreateStore on _CreateStoreBase, Store {
   }
 
   @override
-  Future<dynamic> setCategorySelected(CategoryModel value) {
+  dynamic setCategorySelected(CategoryModel value) {
     final _$actionInfo = _$_CreateStoreBaseActionController.startAction(
         name: '_CreateStoreBase.setCategorySelected');
     try {
@@ -213,7 +213,7 @@ mixin _$CreateStore on _CreateStoreBase, Store {
   }
 
   @override
-  Future<dynamic> setCategorySelectedEdit(
+  dynamic setCategorySelectedEdit(
       ProductModel productModel, List<CategoryModel> categories) {
     final _$actionInfo = _$_CreateStoreBaseActionController.startAction(
         name: '_CreateStoreBase.setCategorySelectedEdit');

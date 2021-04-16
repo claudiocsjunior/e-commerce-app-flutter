@@ -28,21 +28,38 @@ abstract class _ProductStoreBase with Store {
   bool loading = true;
 
   @observable
-  List<ProductModel> products;
+  List<ProductModel> products = List.generate(0, (index) => ProductModel());
 
   @observable
-  ProductModel lastProduct;
+  ProductModel lastProduct = ProductModel();
+
+  @observable
+  String? search;
+
+  @computed
+  List<ProductModel?> get computedProducts{
+    if(search == null || search == ''){
+      return products;
+    }else{
+      return products.where((element) => element.name!.contains(search!)).toList();
+    }
+  }
+
+  @action
+  setSearch(value){
+    search = value;
+  }
 
   @action
   getList() async{
     if(products == null){
       loading = true;
-      products = List<ProductModel>();
+      //products = List<ProductModel>();
     }
 
-    List<ProductModel> productsList = List<ProductModel>();
+    List<ProductModel> productsList = List.generate(0, (index) => ProductModel());
 
-    QuerySnapshot querySnapshot = await repository.getAllPaginate(lastProduct);
+    QuerySnapshot querySnapshot = await repository.getAllPaginate(lastProduct.reference == null ? null : lastProduct);
       for (var productDoc in querySnapshot.docs) {
         DocumentReference categoryReference = productDoc['categoryReference'];
         DocumentSnapshot categorySnapshot = await categoryRepository.getByReference(categoryReference);
@@ -51,9 +68,9 @@ abstract class _ProductStoreBase with Store {
 
         Directory tempDir = await getTemporaryDirectory();
         String tempPath = tempDir.path;
-        var filePath = tempPath + '/'+ product.reference.id;
+        var filePath = tempPath + '/'+ product.reference!.id;
 
-        product.image = await File(filePath).writeAsBytes(base64Decode(product.photo));
+        product.image = await File(filePath).writeAsBytes(base64Decode(product.photo!));
         //tempDir.deleteSync(recursive: true);
 
         lastProduct = productsList.last;
@@ -70,16 +87,16 @@ abstract class _ProductStoreBase with Store {
     return repository.delete(productModel);
   }
 
-  Future toCreateProduct(){
+  toCreateProduct(){
     Modular.to.pushNamed("/seller/product/create");
   }
 
-  Future toEditProduct(ProductModel productModel){
+  toEditProduct(ProductModel productModel){
     Modular.to.pushNamed("/seller/product/edit", arguments: productModel);
   }
 
 
-  Future<bool> initValues() async {
+  initValues() async {
     await Future.delayed(Duration(seconds: 1));
     await getList();
   }

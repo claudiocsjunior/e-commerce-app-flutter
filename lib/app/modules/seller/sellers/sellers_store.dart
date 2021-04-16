@@ -13,7 +13,7 @@ abstract class _SellersStoreBase with Store {
   }
 
   @observable
-  ObservableStream<List<SellerModel>> sellerList;
+  ObservableStream<List<SellerModel>>? sellerList;
 
   @action
   getList(){

@@ -27,10 +27,10 @@ abstract class _CreateStoreBase with Store {
   }
 
   @observable
-  File image;
+  File? image;
 
   @observable
-  String error = "";
+  String? error = "";
 
   @observable
   bool loading = false;
@@ -39,10 +39,10 @@ abstract class _CreateStoreBase with Store {
   ProductModel productModel = new ProductModel();
 
   @observable
-  ObservableStream<List<CategoryModel>> categoryList;
+  ObservableStream<List<CategoryModel>>? categoryList;
 
   @observable
-  CategoryModel categorySelected = null;
+  CategoryModel? categorySelected = null;
 
   @action
   getListCategory() {
@@ -50,7 +50,7 @@ abstract class _CreateStoreBase with Store {
   }
 
   @action
-  Future setProductModel(ProductModel value) {
+  setProductModel(ProductModel value) {
     productModel = value;
   }
 
@@ -58,7 +58,7 @@ abstract class _CreateStoreBase with Store {
   Future getImageGalery() async{
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-    image = File(pickedFile.path);
+    image = File(pickedFile!.path);
   }
 
   @action
@@ -67,46 +67,46 @@ abstract class _CreateStoreBase with Store {
     String tempPath = tempDir.path;
     var filePath = tempPath + '/file_01.tmp';
 
-    image = await File(filePath).writeAsBytes(base64Decode(productModel.photo));
+    image = await File(filePath).writeAsBytes(base64Decode(productModel.photo!));
   }
 
   @action
   Future getImageCamera() async{
     final pickedFile = await picker.getImage(source: ImageSource.camera);
 
-    image = File(pickedFile.path);
+    image = File(pickedFile!.path);
   }
 
   @action
-  Future setName(value) {
+  setName(value) {
     productModel.name = value;
   }
 
   @action
-  Future setError(value) {
+  setError(value) {
     error = value;
   }
 
 
   @action
-  Future setDescription(value) {
+  setDescription(value) {
     productModel.description = value;
   }
 
   @action
-  Future setPrice(double value) {
+  setPrice(double value) {
     productModel.price = value;
   }
 
   @action
-  Future setCategorySelected(CategoryModel value) {
+  setCategorySelected(CategoryModel value) {
     categorySelected = value;
   }
 
   @action
-  Future setCategorySelectedEdit(ProductModel productModel, List<CategoryModel> categories) {
+  setCategorySelectedEdit(ProductModel productModel, List<CategoryModel> categories) {
     categories.forEach((CategoryModel element) {
-      if(element.reference.id == productModel.categoryModel.reference.id){
+      if(element.reference!.id == productModel.categoryModel!.reference!.id){
         categorySelected = element;
       }
     });
@@ -116,9 +116,9 @@ abstract class _CreateStoreBase with Store {
   Future saveProduct() async{
     try{
       loading = true;
-      var bytesImage = await image.readAsBytes();
+      var bytesImage = await image!.readAsBytes();
       String base64 = base64Encode(bytesImage);
-      productModel.categoryModel = categorySelected;
+      productModel.categoryModel = categorySelected!;
       productModel.photo = base64;
 
       if(productModel.reference == null){

@@ -4,8 +4,8 @@ abstract class IauthRepository{
   Future<User> getUser();
   Future<User> getGoogleLogin();
 
-  Future<User> register({String email, String password});
-  Future<User> getEmailLogin({String email, String password});
+  Future<User?> register({required String email, required String password});
+  Future<User?> getEmailLogin({required String email, required String password});
 
   Future<String> getToken();
   Future logOut();

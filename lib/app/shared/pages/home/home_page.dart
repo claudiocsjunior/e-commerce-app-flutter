@@ -14,12 +14,12 @@ import 'home_store.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
-  const HomePage({Key key, this.title = "HomePage"}) : super(key: key);
+  const HomePage({Key? key, this.title = "HomePage"}) : super(key: key);
   @override
   HomePageState createState() => HomePageState();
 }
 class HomePageState extends ModularState<HomePage, HomeStore> {
-  ReactionDisposer disposer;
+  late ReactionDisposer disposer;
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class HomePageState extends ModularState<HomePage, HomeStore> {
       Timer(Duration(seconds: 1), () async {
         AuthStore auth = Modular.get();
         ISellerRepository sellerRepository = Modular.get();
-        List<SellerModel> listSeller = await sellerRepository.getByEmail(auth.user.email);
+        List<SellerModel> listSeller = await sellerRepository.getByEmail(auth.user!.email!);
 
         if(listSeller.isNotEmpty){
           controller.setTypeUser(TypeUser.seller);

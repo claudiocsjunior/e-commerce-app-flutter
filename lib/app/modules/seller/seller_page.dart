@@ -5,7 +5,7 @@ import 'enums/page-enum-bottom-nav.dart';
 
 class SellerPage extends StatefulWidget {
   final String title;
-  const SellerPage({Key key, this.title = "SellerPage"}) : super(key: key);
+  const SellerPage({Key? key, this.title = "SellerPage"}) : super(key: key);
   @override
   SellerPageState createState() => SellerPageState();
 }
@@ -15,6 +15,7 @@ class SellerPageState extends State<SellerPage> {
     return DashBoard(
       title: "E-Commerce",
       bottomNavigationindexSelected: PageEnumBottomNav.home.index,
+      functionFloatingAction: (){},
       body: Container(),
     );
   }

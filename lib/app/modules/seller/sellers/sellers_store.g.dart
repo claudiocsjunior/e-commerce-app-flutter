@@ -12,13 +12,13 @@ mixin _$SellersStore on _SellersStoreBase, Store {
   final _$sellerListAtom = Atom(name: '_SellersStoreBase.sellerList');
 
   @override
-  ObservableStream<List<SellerModel>> get sellerList {
+  ObservableStream<List<SellerModel>>? get sellerList {
     _$sellerListAtom.reportRead();
     return super.sellerList;
   }
 
   @override
-  set sellerList(ObservableStream<List<SellerModel>> value) {
+  set sellerList(ObservableStream<List<SellerModel>>? value) {
     _$sellerListAtom.reportWrite(value, super.sellerList, () {
       super.sellerList = value;
     });

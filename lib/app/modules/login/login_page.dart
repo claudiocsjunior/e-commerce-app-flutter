@@ -9,7 +9,7 @@ import 'login_store.dart';
 class LoginPage extends StatefulWidget {
   final String title;
 
-  const LoginPage({Key key, this.title = "LoginPage"}) : super(key: key);
+  const LoginPage({Key? key, this.title = "LoginPage"}) : super(key: key);
 
   @override
   LoginPageState createState() => LoginPageState();
@@ -63,9 +63,11 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
                 icon: Icon(Icons.mail),
                 hintText: "Email",
               ),
-              validator: (value) {
-                bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);
-                if (value.length == 0) {
+              validator: (String? value) {
+                String v = value == null ? "" : value;
+
+                bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(v);
+                if (v.length == 0) {
                   return "Informe o Email";
                 } else if(!emailValid){
                   return "Email inválido";
@@ -112,7 +114,7 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
                 ),
               ),
               onPressed: (){
-                if (_formkey.currentState.validate()) {
+                if (_formkey.currentState!.validate()) {
                   controller.setErro("");
                   controller.loginEmailAndPassword();
                 }

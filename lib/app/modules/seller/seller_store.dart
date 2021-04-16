@@ -9,28 +9,28 @@ class SellerStore = _SellerStoreBase with _$SellerStore;
 abstract class _SellerStoreBase with Store {
   AuthStore authStore = Modular.get();
 
-  Future LogOut(){
+  LogOut(){
     authStore.logOut();
     Modular.to.pushReplacementNamed("/");
   }
 
-  Future toHomePage(){
+  toHomePage(){
     Modular.to.popUntil(ModalRoute.withName('/seller/'));
   }
 
-  Future toCategoty(){
+  toCategoty(){
     Modular.to.pushNamedAndRemoveUntil("/seller/category", ModalRoute.withName('/seller/'));
   }
 
-  Future toSellers(){
+  toSellers(){
     Modular.to.pushNamedAndRemoveUntil("/seller/sellers", ModalRoute.withName('/seller/'));
   }
 
-  Future toSettings(){
+  toSettings(){
     Modular.to.pushNamedAndRemoveUntil("/seller/settings", ModalRoute.withName('/seller/'));
   }
 
-  Future toProduct(){
+  toProduct(){
     Modular.to.pushNamedAndRemoveUntil("/seller/product", ModalRoute.withName('/seller/'));
   }
 }

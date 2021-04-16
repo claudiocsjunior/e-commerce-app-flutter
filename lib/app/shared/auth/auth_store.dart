@@ -14,13 +14,13 @@ abstract class _AuthStoreBase with Store {
   final IauthRepository _authRepository = Modular.get();
 
   @observable
-  User user = null;
+  User? user ;
 
   @observable
   AuthStatus status = AuthStatus.loading;
 
   @action
-  setUser(User value) {
+  setUser(User? value) {
     user = value;
     status =
         user == null ? status = AuthStatus.logoff : status = AuthStatus.login;
@@ -41,7 +41,7 @@ abstract class _AuthStoreBase with Store {
 
   Future register(email, password) async {
     try{
-      User user = await _authRepository.register(email:email, password: password);
+      User user = (await _authRepository.register(email:email, password: password))!;
       setUser(user);
       return user;
     }catch(e){
@@ -51,7 +51,7 @@ abstract class _AuthStoreBase with Store {
 
   Future LoginEmailAndPassword(email, password) async {
     try{
-      User user = await _authRepository.getEmailLogin(email:email, password: password);
+      User user = (await _authRepository.getEmailLogin(email:email, password: password))!;
       setUser(user);
       return user;
     }catch(e){

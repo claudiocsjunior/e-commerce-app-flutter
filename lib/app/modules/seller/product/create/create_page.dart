@@ -13,9 +13,9 @@ import 'create_store.dart';
 
 class CreatePage extends StatefulWidget {
   final String title;
-  final ProductModel product;
+  final ProductModel? product;
 
-  const CreatePage({this.product = null, Key key, this.title = "CreatePage"}) : super(key: key);
+  const CreatePage({this.product = null, Key? key, this.title = "CreatePage"}) : super(key: key);
 
   @override
   CreatePageState createState() => CreatePageState();
@@ -29,8 +29,8 @@ class CreatePageState extends ModularState<CreatePage, CreateStore> {
     super.initState();
 
     if(widget.product != null){
-      controller.setProductModel(widget.product);
-      controller.getImageProductEdit(widget.product);
+      controller.setProductModel(widget.product!);
+      controller.getImageProductEdit(widget.product!);
     }
   }
 
@@ -77,7 +77,7 @@ class CreatePageState extends ModularState<CreatePage, CreateStore> {
             }
 
             return Image.file(
-              controller.image,
+              controller.image!,
               fit: BoxFit.fill,
               width: MediaQuery.of(context).size.width - 50,
               height: MediaQuery.of(context).size.width * 0.75,
@@ -142,13 +142,13 @@ class CreatePageState extends ModularState<CreatePage, CreateStore> {
               );
             }
 
-            if (controller.categoryList.data == null) {
+            if (controller.categoryList!.data == null) {
               return Center(
                 child: CircularProgressIndicator(),
               );
             }
 
-            if (controller.categoryList.hasError) {
+            if (controller.categoryList!.hasError) {
               return Center(
                 child: ElevatedButton(
                   onPressed: controller.getListCategory,
@@ -160,10 +160,10 @@ class CreatePageState extends ModularState<CreatePage, CreateStore> {
               );
             }
 
-            List<CategoryModel> listCategory = controller.categoryList.data;
+            List<CategoryModel> listCategory = controller.categoryList!.data;
 
             if(widget.product != null){
-              controller.setCategorySelectedEdit(widget.product, listCategory);
+              controller.setCategorySelectedEdit(widget.product!, listCategory);
             }
 
             return DropdownButton<CategoryModel>(
@@ -181,8 +181,8 @@ class CreatePageState extends ModularState<CreatePage, CreateStore> {
                 height: 2,
                 color: BackgroundColor.colorPrimary,
               ),
-              onChanged: (CategoryModel categoryModel) {
-                controller.setCategorySelected(categoryModel);
+              onChanged: (CategoryModel? categoryModel) {
+                controller.setCategorySelected(categoryModel!);
               },
               items: listCategory.map<DropdownMenuItem<CategoryModel>>((CategoryModel categoryModel) {
                 return DropdownMenuItem<CategoryModel>(
@@ -301,7 +301,7 @@ class CreatePageState extends ModularState<CreatePage, CreateStore> {
                       return;
                     }
 
-                    if (_formkey.currentState.validate()) {
+                    if (_formkey.currentState!.validate()) {
                       controller.saveProduct();
                     }
                   },
@@ -322,7 +322,7 @@ class CreatePageState extends ModularState<CreatePage, CreateStore> {
         return Container(
           margin: EdgeInsets.only(top: 20),
           child: Text(
-            controller.error,
+            controller.error!,
             style: TextStyle(
                 color: TextColor.colorDanger, fontSize: TextSize.normal),
           ),

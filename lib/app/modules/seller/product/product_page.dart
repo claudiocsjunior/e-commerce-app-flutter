@@ -14,7 +14,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 class ProductPage extends StatefulWidget {
   final String title;
 
-  const ProductPage({Key key, this.title = "ProductPage"}) : super(key: key);
+  const ProductPage({Key? key, this.title = "ProductPage"}) : super(key: key);
 
   @override
   ProductPageState createState() => ProductPageState();
@@ -27,7 +27,7 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
   );
 
   final snackBarLoading = SnackBar(
-      duration: Duration(milliseconds: 300),
+      duration: Duration(milliseconds: 500),
       content: Container(
           alignment: Alignment.center,
           height: 30,
@@ -61,52 +61,74 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
       bottomNavigationindexSelected: PageEnumBottomNav.product.index,
       floatingAction: true,
       functionFloatingAction: controller.toCreateProduct,
-      body: Observer(builder: (_) {
-        if (controller.loading) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
-        if (controller.products.length == 0) {
-          return Center(
-              child: Text(
-            "Nenhum produto cadastrado",
-            style: TextStyle(color: TextColor.colorSecondaryB),
-          ));
-        }
-
-        return ListView.builder(
-            shrinkWrap: true,
-            itemCount: controller.products.length,
-            controller: _scrollController,
-            itemBuilder: (_, index) {
-              ProductModel productModel = controller.products[index];
-
-              return ListTile(
-                title: Text(
-                  productModel.name,
-                  style: TextStyle(fontSize: TextSize.normal),
-                ),
-                subtitle: Text(
-                  productModel.categoryModel.description,
-                  style: TextStyle(fontSize: TextSize.normal),
-                ),
-                leading: Image.file(
-                  productModel.image,
-                  fit: BoxFit.fill,
-                ),
-                trailing: IconButton(
-                  icon: Icon(
-                    Icons.more_vert,
-                    color: TextColor.colorSecondary,
+      body: Column(
+        children: [
+          Container(
+            height: 100,
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            child:           Observer(builder: (_) {
+              return Container(
+                margin: EdgeInsets.only(top: 20),
+                child: TextFormField(
+                  initialValue: controller.search,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    icon: Icon(Icons.search),
+                    hintText: "Nome",
                   ),
-                  onPressed: () => modalBottomSheet(productModel),
+                  onChanged: (value) => controller.setSearch(value),
                 ),
-                onLongPress: () => {controller.delete(productModel)},
               );
-            });
-      }),
+            }),
+          ),
+          Expanded(child: Observer(builder: (_) {
+            if (controller.loading) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            if (controller.computedProducts.length == 0) {
+              return Center(
+                  child: Text(
+                "Nenhum produto cadastrado",
+                style: TextStyle(color: TextColor.colorSecondaryB),
+              ));
+            }
+
+            return ListView.builder(
+                shrinkWrap: true,
+                itemCount: controller.computedProducts.length,
+                controller: _scrollController,
+                itemBuilder: (_, index) {
+                  ProductModel productModel = controller.computedProducts[index]!;
+
+                  return ListTile(
+                    title: Text(
+                      productModel.name!,
+                      style: TextStyle(fontSize: TextSize.normal),
+                    ),
+                    subtitle: Text(
+                      productModel.categoryModel!.description,
+                      style: TextStyle(fontSize: TextSize.normal),
+                    ),
+                    leading: Image.file(
+                      productModel.image!,
+                      fit: BoxFit.fill,
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: TextColor.colorSecondary,
+                      ),
+                      onPressed: () => modalBottomSheet(productModel),
+                    ),
+                    onLongPress: () => {controller.delete(productModel)},
+                  );
+                });
+          }))
+        ],
+      ),
     );
   }
 
@@ -122,12 +144,12 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
                   children: [
                     Container(
                       margin: EdgeInsets.all(20),
-                      child: Text(productModel.name,
+                      child: Text(productModel.name!,
                           style: TextStyle(fontSize: TextSize.large)),
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 20, left: 20, right: 20),
-                      child: Text(productModel.description,
+                      child: Text(productModel.description!,
                           style: TextStyle(
                               fontSize: TextSize.normal,
                               color: TextColor.colorSecondaryB)),
@@ -136,7 +158,7 @@ class ProductPageState extends ModularState<ProductPage, ProductStore> {
                       margin: EdgeInsets.only(top: 10, left: 20, right: 20),
                       child: Text(
                           "Categoria: " +
-                              productModel.categoryModel.description,
+                              productModel.categoryModel!.description,
                           style: TextStyle(
                               fontSize: TextSize.normal,
                               color: TextColor.colorSecondaryB)),

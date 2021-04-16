@@ -9,7 +9,7 @@ import 'register_store.dart';
 
 class RegisterPage extends StatefulWidget {
   final String title;
-  const RegisterPage({Key key, this.title = "RegisterPage"}) : super(key: key);
+  const RegisterPage({Key? key, this.title = "RegisterPage"}) : super(key: key);
   @override
   RegisterPageState createState() => RegisterPageState();
 }
@@ -66,7 +66,7 @@ class RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
               ),
 
               validator: (value) {
-                bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);
+                bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value!);
                 if (value.length == 0) {
                   return "Informe o Email";
                 } else if(!emailValid){
@@ -153,7 +153,7 @@ class RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
                     return;
                   }
 
-                  if (_formkey.currentState.validate()) {
+                  if (_formkey.currentState!.validate()) {
                     ScaffoldMessenger.of(context)
                         .showSnackBar(SnackBar(content: Text('Aguarde')));
                     controller.setErro("");

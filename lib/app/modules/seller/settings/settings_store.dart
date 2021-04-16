@@ -47,45 +47,45 @@ abstract class _SettingsStoreBase with Store {
   Color colorConfirm = TextColor.colorSuccess;
 
   @action
-  Future setEmail(value) {
+  setEmail(value) {
     email = value;
   }
 
   @action
-  Future setName(value) {
+  setName(value) {
     name = value;
   }
 
   @action
-  Future setError(value) {
+  setError(value) {
     error = value;
   }
 
   @action
-  Future setErrorPassword(value) {
+  setErrorPassword(value) {
     errorPassword = value;
   }
 
   @action
-  Future setPassword(value) {
+  setPassword(value) {
     password = value;
     validPassword();
   }
 
   @action
-  Future setConfirmPassword(value) {
+  setConfirmPassword(value) {
     confirmPassword = value;
     validPassword();
   }
 
   @action
-  Future getDados() {
-    email = authStore.user.email;
-    name = authStore.user.displayName;
+  getDados() {
+    email = authStore.user!.email!;
+    name = authStore.user!.displayName!;
   }
 
   @action
-  Future setLoading(bool value) {
+  setLoading(bool value) {
     loading = value;
   }
 
@@ -106,7 +106,7 @@ abstract class _SettingsStoreBase with Store {
   }
 
   @action
-  Future validPassword() {
+  validPassword() {
     if(confirmPassword == ""){
       textConfirm = "";
       colorConfirm = TextColor.colorSuccess;

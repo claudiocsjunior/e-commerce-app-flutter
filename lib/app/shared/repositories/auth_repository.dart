@@ -9,14 +9,14 @@ class AuthRepository implements IauthRepository {
 
   @override
   Future<User> getGoogleLogin() async {
-    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    final GoogleSignInAccount googleUser = (await _googleSignIn.signIn())!;
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
 
-    final User user = (await _auth.signInWithCredential(credential)).user;
+    final User user = (await _auth.signInWithCredential(credential)).user!;
     return user;
   }
 
@@ -28,7 +28,7 @@ class AuthRepository implements IauthRepository {
 
   @override
   Future<User> getUser() async {
-    User user = _auth.currentUser;
+    User user = _auth.currentUser!;
 
     // if(user != null){
     //   if (!user.emailVerified) {
@@ -45,13 +45,13 @@ class AuthRepository implements IauthRepository {
   }
 
   @override
-  Future<User> getEmailLogin({String email, String password}) async {
+  Future<User?> getEmailLogin({required String email, required String password}) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
               email: email.trim(), password: password.trim());
 
-      final User user = userCredential.user;
+      final User user = userCredential.user!;
       return user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -59,17 +59,18 @@ class AuthRepository implements IauthRepository {
       } else if (e.code == 'wrong-password') {
         throw Exception('Senha errada fornecida para esse usuário.');
       }
+      return null;
     }
   }
 
   @override
-  Future<User> register({String email, String password}) async {
+  Future<User?> register({required String email, required String password}) async {
     try {
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
               email: email.trim(), password: password.trim());
 
-      final User user = userCredential.user;
+      final User user = userCredential.user!;
       return user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -77,18 +78,20 @@ class AuthRepository implements IauthRepository {
       } else if (e.code == 'email-already-in-use') {
         throw Exception('A conta já existe para esse e-mail.');
       }
+      return null;
     } catch (e) {
       print(e);
       throw e;
+      return null;
     }
   }
 
   @override
   Future<User> setName(String name) async{
     try{
-      User user = _auth.currentUser;
+      User user = _auth.currentUser!;
       await user.updateProfile(displayName: name);
-      user = _auth.currentUser;
+      user = _auth.currentUser!;
       return user;
     }catch(e){
       throw e;
@@ -99,10 +102,10 @@ class AuthRepository implements IauthRepository {
   @override
   Future<User> setEmail(String email) async{
     try{
-      User user = _auth.currentUser;
-      if(email.trim() != user.email.trim()){
+      User user = _auth.currentUser!;
+      if(email.trim() != user.email!.trim()){
         await user.updateEmail(email);
-        user = _auth.currentUser;
+        user = _auth.currentUser!;
       }
       return user;
     }on FirebaseException catch(e){
@@ -119,9 +122,9 @@ class AuthRepository implements IauthRepository {
   @override
   Future<User> setPassword(String password) async{
     try{
-      User user = _auth.currentUser;
+      User user = _auth.currentUser!;
       await user.updatePassword(password);
-      user = _auth.currentUser;
+      user = _auth.currentUser!;
       return user;
     }on FirebaseException catch(e){
       if(e.code == "requires-recent-login"){

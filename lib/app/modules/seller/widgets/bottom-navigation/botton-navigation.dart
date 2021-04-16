@@ -6,7 +6,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 class BottomNavigation extends StatelessWidget {
   int currentIndex = 0;
 
-  BottomNavigation({this.currentIndex});
+  BottomNavigation({required this.currentIndex});
 
   @override
   Widget build(BuildContext context) {

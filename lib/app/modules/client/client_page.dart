@@ -4,7 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class ClientPage extends StatefulWidget {
   final String title;
-  const ClientPage({Key key, this.title = "ClientPage"}) : super(key: key);
+  const ClientPage({Key? key, this.title = "ClientPage"}) : super(key: key);
   @override
   ClientPageState createState() => ClientPageState();
 }

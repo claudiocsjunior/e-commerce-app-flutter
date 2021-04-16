@@ -13,7 +13,7 @@ import 'settings_store.dart';
 class SettingsPage extends StatefulWidget {
   final String title;
 
-  const SettingsPage({Key key, this.title = "SettingsPage"}) : super(key: key);
+  const SettingsPage({Key? key, this.title = "SettingsPage"}) : super(key: key);
 
   @override
   SettingsPageState createState() => SettingsPageState();
@@ -90,7 +90,7 @@ class SettingsPageState extends ModularState<SettingsPage, SettingsStore> {
                               validator: (value) {
                                 bool emailValid = RegExp(
                                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                    .hasMatch(value);
+                                    .hasMatch(value!);
                                 if (value.length == 0) {
                                   return "Informe o Email";
                                 } else if (!emailValid) {
@@ -126,7 +126,7 @@ class SettingsPageState extends ModularState<SettingsPage, SettingsStore> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  if (_formkey.currentState.validate()) {
+                                  if (_formkey.currentState!.validate()) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(content: Text('Aguarde')));
 
@@ -245,7 +245,7 @@ class SettingsPageState extends ModularState<SettingsPage, SettingsStore> {
                                     return;
                                   }
 
-                                  if (_formPasswordkey.currentState
+                                  if (_formPasswordkey.currentState!
                                       .validate()) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(content: Text('Aguarde')));

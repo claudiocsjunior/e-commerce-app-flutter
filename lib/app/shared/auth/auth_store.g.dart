@@ -12,13 +12,13 @@ mixin _$AuthStore on _AuthStoreBase, Store {
   final _$userAtom = Atom(name: '_AuthStoreBase.user');
 
   @override
-  User get user {
+  User? get user {
     _$userAtom.reportRead();
     return super.user;
   }
 
   @override
-  set user(User value) {
+  set user(User? value) {
     _$userAtom.reportWrite(value, super.user, () {
       super.user = value;
     });
@@ -43,7 +43,7 @@ mixin _$AuthStore on _AuthStoreBase, Store {
       ActionController(name: '_AuthStoreBase');
 
   @override
-  dynamic setUser(User value) {
+  dynamic setUser(User? value) {
     final _$actionInfo = _$_AuthStoreBaseActionController.startAction(
         name: '_AuthStoreBase.setUser');
     try {

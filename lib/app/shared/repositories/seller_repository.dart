@@ -22,13 +22,13 @@ class SellerRepository implements ISellerRepository{
   }
 
   @override
-  Future update(SellerModel sellerModel) {
-    sellerModel.reference.update({'email': sellerModel.email});
+  Future update(SellerModel sellerModel) async {
+    await sellerModel.reference!.update({'email': sellerModel.email});
   }
 
   @override
   Future delete(SellerModel sellerModel) {
-    return sellerModel.reference.delete();
+    return sellerModel.reference!.delete();
   }
 
   @override

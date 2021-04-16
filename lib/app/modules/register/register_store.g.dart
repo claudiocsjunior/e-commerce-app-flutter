@@ -126,7 +126,7 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
       ActionController(name: '_RegisterStoreBase');
 
   @override
-  Future<dynamic> setEmail(String value) {
+  dynamic setEmail(String value) {
     final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(
         name: '_RegisterStoreBase.setEmail');
     try {
@@ -137,7 +137,7 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
   }
 
   @override
-  Future<dynamic> setPassword(String value) {
+  dynamic setPassword(String value) {
     final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(
         name: '_RegisterStoreBase.setPassword');
     try {
@@ -148,7 +148,7 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
   }
 
   @override
-  Future<dynamic> setPasswordConfirm(String value) {
+  dynamic setPasswordConfirm(String value) {
     final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(
         name: '_RegisterStoreBase.setPasswordConfirm');
     try {
@@ -159,7 +159,7 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
   }
 
   @override
-  Future<dynamic> setValidateForm(bool value) {
+  dynamic setValidateForm(bool value) {
     final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(
         name: '_RegisterStoreBase.setValidateForm');
     try {
@@ -170,7 +170,7 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
   }
 
   @override
-  Future<dynamic> setErro(String value) {
+  dynamic setErro(String value) {
     final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(
         name: '_RegisterStoreBase.setErro');
     try {
@@ -181,7 +181,7 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
   }
 
   @override
-  Future<dynamic> validPassword() {
+  dynamic validPassword() {
     final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(
         name: '_RegisterStoreBase.validPassword');
     try {

@@ -12,13 +12,13 @@ mixin _$CategoryStore on _CategoryStoreBase, Store {
   final _$categoryListAtom = Atom(name: '_CategoryStoreBase.categoryList');
 
   @override
-  ObservableStream<List<CategoryModel>> get categoryList {
+  ObservableStream<List<CategoryModel>>? get categoryList {
     _$categoryListAtom.reportRead();
     return super.categoryList;
   }
 
   @override
-  set categoryList(ObservableStream<List<CategoryModel>> value) {
+  set categoryList(ObservableStream<List<CategoryModel>>? value) {
     _$categoryListAtom.reportWrite(value, super.categoryList, () {
       super.categoryList = value;
     });

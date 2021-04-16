@@ -34,35 +34,35 @@ abstract class _RegisterStoreBase with Store {
   String erro = "";
 
   @action
-  Future setEmail(String value) {
+  setEmail(String value) {
     email = value;
   }
 
   @action
-  Future setPassword(String value) {
+  setPassword(String value) {
     password = value;
     validPassword();
   }
 
   @action
-  Future setPasswordConfirm(String value) {
+  setPasswordConfirm(String value) {
     passwordConfirm = value;
     validPassword();
   }
 
   @action
-  Future setValidateForm(bool value) {
+  setValidateForm(bool value) {
     validateForm = value;
   }
 
   @action
-  Future setErro(String value) {
+  setErro(String value) {
     erro = value;
   }
 
 
   @action
-  Future validPassword() {
+  validPassword() {
     if(passwordConfirm == ""){
       textConfirm = "";
       colorConfirm = TextColor.colorSuccess;

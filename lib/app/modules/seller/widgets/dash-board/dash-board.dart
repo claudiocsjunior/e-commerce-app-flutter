@@ -10,9 +10,9 @@ class DashBoard extends StatefulWidget {
   String title;
   int bottomNavigationindexSelected;
   bool floatingAction;
-  Function functionFloatingAction = () => {};
+  Function functionFloatingAction;
 
-  DashBoard({this.body, this.title = "", this.bottomNavigationindexSelected = 0, this.floatingAction = false, this.functionFloatingAction});
+  DashBoard({required this.body, this.title = "", this.bottomNavigationindexSelected = 0, this.floatingAction = false, required this.functionFloatingAction});
 
   @override
   _DashBoardState createState() => _DashBoardState();
@@ -42,13 +42,11 @@ class _DashBoardState extends State<DashBoard> {
   Widget FloatingButton(){
     if(widget.floatingAction){
       return  FloatingActionButton(
-        child: IconButton(
-          icon: Icon(
+        child: Icon(
             Icons.add,
             color: TextColor.colorPrimary,
-          ),
         ),
-        onPressed: widget.functionFloatingAction,
+        onPressed: () {widget.functionFloatingAction();},
       );
     }
 

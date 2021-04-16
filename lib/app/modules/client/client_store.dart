@@ -17,7 +17,7 @@ abstract class _ClientStoreBase with Store {
     value++;
   }
 
-  Future LogOut(){
+  LogOut(){
     authStore.logOut();
     Modular.to.pushReplacementNamed("/");
   }

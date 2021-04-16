@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CategoryModel{
   String description;
-  DocumentReference reference;
+  DocumentReference? reference;
 
   CategoryModel({this.description = '', this.reference});
 

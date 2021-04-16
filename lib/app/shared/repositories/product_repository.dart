@@ -10,7 +10,7 @@ class ProductRepository implements IProductRepository {
   ProductRepository(this.firestore);
 
   @override
-  Stream<List<ProductModel>> getAll(var productModel) async* {
+  Stream<List<ProductModel?>> getAll(var productModel) async* {
     var productsStream;
     if(productModel == null){
       productsStream = firestore.collection("product").orderBy("name").limit(10).snapshots();
@@ -19,7 +19,7 @@ class ProductRepository implements IProductRepository {
       productsStream = firestore.collection("product").orderBy("name").startAfterDocument(lastProductSnapshot).limit(10).snapshots();
     }
 
-    var products = List<ProductModel>();
+    List<ProductModel?> products = List.generate(0, (index) => null);
     await for (var productSnapshot in productsStream) {
       for (var productDoc in productSnapshot.docs) {
         ProductModel product;
@@ -43,33 +43,33 @@ class ProductRepository implements IProductRepository {
       'description': productModel.description,
       'photo': productModel.photo,
       'price': productModel.price,
-      'categoryReference': productModel.categoryModel.reference
+      'categoryReference': productModel.categoryModel!.reference
     });
   }
 
   @override
-  Future update(ProductModel productModel) {
-    productModel.reference.update({
+  Future update(ProductModel productModel) async {
+    await productModel.reference!.update({
     'name': productModel.name,
     'description': productModel.description,
     'photo': productModel.photo,
     'price': productModel.price,
-    'categoryReference': productModel.categoryModel.reference
+    'categoryReference': productModel.categoryModel!.reference
     });
   }
 
   @override
   Future delete(ProductModel productModel) {
-    return productModel.reference.delete();
+    return productModel.reference!.delete();
   }
 
   @override
-  Future<QuerySnapshot> getAllPaginate(ProductModel productModel) async {
+  Future<QuerySnapshot> getAllPaginate(ProductModel? productModel) async {
     var productsStream;
     if(productModel == null){
       productsStream = await firestore.collection("product").orderBy("name").limit(10).get();
     }else{
-      DocumentSnapshot lastProductSnapshot = await firestore.collection("product").doc(productModel.reference.id).get();
+      DocumentSnapshot lastProductSnapshot = await firestore.collection("product").doc(productModel.reference!.id).get();
       productsStream = await firestore.collection("product").orderBy("name").startAfterDocument(lastProductSnapshot).limit(10).get();
     }
 

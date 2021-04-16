@@ -7,14 +7,14 @@ import 'package:e_commerce_app/app/shared/models/category_model.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ProductModel {
-  DocumentReference categoryReference;
-  String description;
-  String name;
-  String photo;
-  double price;
-  DocumentReference reference;
-  CategoryModel categoryModel;
-  File image;
+  DocumentReference? categoryReference;
+  String? description;
+  String? name;
+  String? photo;
+  double? price;
+  DocumentReference? reference;
+  CategoryModel? categoryModel;
+  File? image;
 
   ProductModel(
       {this.categoryReference,

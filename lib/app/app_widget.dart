@@ -8,7 +8,7 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Slidy',
-      theme: ThemeData(primarySwatch: BackgroundColor.colorPrimary),
+      theme: ThemeData(primarySwatch: Colors.deepOrange),
     ).modular();
   }
 }

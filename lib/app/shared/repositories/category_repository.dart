@@ -23,13 +23,13 @@ class CategoryRepository implements ICategoryRepository{
   }
 
   @override
-  Future update(CategoryModel categoryModel) {
-      categoryModel.reference.update({'description': categoryModel.description});
+  Future update(CategoryModel categoryModel) async{
+      await categoryModel.reference!.update({'description': categoryModel.description});
   }
 
   @override
   Future delete(CategoryModel categoryModel) {
-    return categoryModel.reference.delete();
+    return categoryModel.reference!.delete();
   }
 
   @override

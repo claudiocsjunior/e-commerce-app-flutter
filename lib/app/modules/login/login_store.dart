@@ -22,17 +22,17 @@ abstract class _LoginStoreBase with Store {
   String erro = "";
 
   @action
-  Future setEmail(String value){
+  setEmail(String value){
     email = value;
   }
 
   @action
-  Future setPassword(String value){
+  setPassword(String value){
     password = value;
   }
 
   @action
-  Future setErro(String value){
+  setErro(String value){
     erro = value;
   }
 

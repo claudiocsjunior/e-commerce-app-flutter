@@ -15,7 +15,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 class CategoryPage extends StatefulWidget {
   final String title;
 
-  const CategoryPage({Key key, this.title = "CategoryPage"}) : super(key: key);
+  const CategoryPage({Key? key, this.title = "CategoryPage"}) : super(key: key);
 
   @override
   CategoryPageState createState() => CategoryPageState();
@@ -42,13 +42,13 @@ class CategoryPageState extends ModularState<CategoryPage, CategoryStore> {
           );
         }
 
-        if (controller.categoryList.data == null) {
+        if (controller.categoryList!.data == null) {
           return Center(
             child: CircularProgressIndicator(),
           );
         }
 
-        if (controller.categoryList.hasError) {
+        if (controller.categoryList!.hasError) {
           return Center(
             child: ElevatedButton(
               onPressed: controller.getList(),
@@ -60,7 +60,7 @@ class CategoryPageState extends ModularState<CategoryPage, CategoryStore> {
           );
         }
 
-        List<CategoryModel> listCategory = controller.categoryList.data;
+        List<CategoryModel> listCategory = controller.categoryList!.data;
 
         if (listCategory.length == 0) {
           return Center(
@@ -100,7 +100,7 @@ class CategoryPageState extends ModularState<CategoryPage, CategoryStore> {
     );
   }
 
-  _showDialog(CategoryModel category) {
+  _showDialog(CategoryModel? category) {
     bool isNull = false;
     if (category == null) {
       isNull = true;
@@ -113,8 +113,8 @@ class CategoryPageState extends ModularState<CategoryPage, CategoryStore> {
         return AlertDialog(
           title: Text(isNull ? "Nova Categoria" : "Editar Categoria"),
           content: TextFormField(
-            initialValue: category.description,
-            onChanged: (value) => category.description = value,
+            initialValue: category!.description,
+            onChanged: (value) => category!.description = value,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: "Insira a descrição...",
@@ -128,7 +128,7 @@ class CategoryPageState extends ModularState<CategoryPage, CategoryStore> {
                 child: Text("Cancelar")),
             TextButton(
                 onPressed: () {
-                  controller.save(category);
+                  controller.save(category!);
                   Modular.to.pop();
                 },
                 child: Text("Finalizar")),

@@ -181,7 +181,7 @@ mixin _$SettingsStore on _SettingsStoreBase, Store {
       ActionController(name: '_SettingsStoreBase');
 
   @override
-  Future<dynamic> setEmail(dynamic value) {
+  dynamic setEmail(dynamic value) {
     final _$actionInfo = _$_SettingsStoreBaseActionController.startAction(
         name: '_SettingsStoreBase.setEmail');
     try {
@@ -192,7 +192,7 @@ mixin _$SettingsStore on _SettingsStoreBase, Store {
   }
 
   @override
-  Future<dynamic> setName(dynamic value) {
+  dynamic setName(dynamic value) {
     final _$actionInfo = _$_SettingsStoreBaseActionController.startAction(
         name: '_SettingsStoreBase.setName');
     try {
@@ -203,7 +203,7 @@ mixin _$SettingsStore on _SettingsStoreBase, Store {
   }
 
   @override
-  Future<dynamic> setError(dynamic value) {
+  dynamic setError(dynamic value) {
     final _$actionInfo = _$_SettingsStoreBaseActionController.startAction(
         name: '_SettingsStoreBase.setError');
     try {
@@ -214,7 +214,7 @@ mixin _$SettingsStore on _SettingsStoreBase, Store {
   }
 
   @override
-  Future<dynamic> setErrorPassword(dynamic value) {
+  dynamic setErrorPassword(dynamic value) {
     final _$actionInfo = _$_SettingsStoreBaseActionController.startAction(
         name: '_SettingsStoreBase.setErrorPassword');
     try {
@@ -225,7 +225,7 @@ mixin _$SettingsStore on _SettingsStoreBase, Store {
   }
 
   @override
-  Future<dynamic> setPassword(dynamic value) {
+  dynamic setPassword(dynamic value) {
     final _$actionInfo = _$_SettingsStoreBaseActionController.startAction(
         name: '_SettingsStoreBase.setPassword');
     try {
@@ -236,7 +236,7 @@ mixin _$SettingsStore on _SettingsStoreBase, Store {
   }
 
   @override
-  Future<dynamic> setConfirmPassword(dynamic value) {
+  dynamic setConfirmPassword(dynamic value) {
     final _$actionInfo = _$_SettingsStoreBaseActionController.startAction(
         name: '_SettingsStoreBase.setConfirmPassword');
     try {
@@ -247,7 +247,7 @@ mixin _$SettingsStore on _SettingsStoreBase, Store {
   }
 
   @override
-  Future<dynamic> getDados() {
+  dynamic getDados() {
     final _$actionInfo = _$_SettingsStoreBaseActionController.startAction(
         name: '_SettingsStoreBase.getDados');
     try {
@@ -258,7 +258,7 @@ mixin _$SettingsStore on _SettingsStoreBase, Store {
   }
 
   @override
-  Future<dynamic> setLoading(bool value) {
+  dynamic setLoading(bool value) {
     final _$actionInfo = _$_SettingsStoreBaseActionController.startAction(
         name: '_SettingsStoreBase.setLoading');
     try {
@@ -269,7 +269,7 @@ mixin _$SettingsStore on _SettingsStoreBase, Store {
   }
 
   @override
-  Future<dynamic> validPassword() {
+  dynamic validPassword() {
     final _$actionInfo = _$_SettingsStoreBaseActionController.startAction(
         name: '_SettingsStoreBase.validPassword');
     try {

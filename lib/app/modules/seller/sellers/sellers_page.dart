@@ -16,7 +16,7 @@ import 'dart:core';
 class SellersPage extends StatefulWidget {
   final String title;
 
-  const SellersPage({Key key, this.title = "SellersPage"}) : super(key: key);
+  const SellersPage({Key? key, this.title = "SellersPage"}) : super(key: key);
 
   @override
   SellersPageState createState() => SellersPageState();
@@ -38,11 +38,9 @@ class SellersPageState extends ModularState<SellersPage, SellersStore> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: IconButton(
-          icon: Icon(
+        child: Icon(
             Icons.add,
             color: TextColor.colorPrimary,
-          ),
         ),
         onPressed: () => _showDialog(null),
       ),
@@ -63,7 +61,7 @@ class SellersPageState extends ModularState<SellersPage, SellersStore> {
             ),
             Expanded(
               child: Observer(builder: (_) {
-                if (controller.sellerList.hasError) {
+                if (controller.sellerList!.hasError) {
                   return Center(
                     child: ElevatedButton(
                       onPressed: controller.getList(),
@@ -75,13 +73,13 @@ class SellersPageState extends ModularState<SellersPage, SellersStore> {
                   );
                 }
 
-                if (controller.sellerList.data == null) {
+                if (controller.sellerList!.data == null) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
                 }
 
-                List<SellerModel> listSeller = controller.sellerList.data;
+                List<SellerModel> listSeller = controller.sellerList!.data;
 
                 return ListView.builder(
                     itemCount: listSeller.length,
@@ -118,7 +116,7 @@ class SellersPageState extends ModularState<SellersPage, SellersStore> {
     );
   }
 
-  _showDialog(SellerModel seller) {
+  _showDialog(SellerModel? seller) {
     bool isNull = false;
     if (seller == null) {
       isNull = true;
@@ -133,8 +131,8 @@ class SellersPageState extends ModularState<SellersPage, SellersStore> {
           child: AlertDialog(
             title: Text(isNull ? "Novo Vendedor" : "Editar Vendedor"),
             content: TextFormField(
-              initialValue: seller.email,
-              onChanged: (value) => seller.email = value.trim(),
+              initialValue: seller!.email,
+              onChanged: (value) => seller!.email = value.trim(),
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: "Insira o email...",
@@ -142,7 +140,7 @@ class SellersPageState extends ModularState<SellersPage, SellersStore> {
               validator: (value) {
                 bool emailValid = RegExp(
                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                    .hasMatch(value);
+                    .hasMatch(value!);
                 if (value.length == 0) {
                   return "Informe o Email";
                 } else if (!emailValid) {
@@ -162,11 +160,11 @@ class SellersPageState extends ModularState<SellersPage, SellersStore> {
                   child: Text("Cancelar")),
               TextButton(
                   onPressed: () {
-                    if (_formkey.currentState.validate()) {
+                    if (_formkey.currentState!.validate()) {
                       ScaffoldMessenger.of(context)
                           .showSnackBar(SnackBar(content: Text('Aguarde')));
 
-                      controller.save(seller);
+                      controller.save(seller!);
                       Modular.to.pop();
                     }
                   },

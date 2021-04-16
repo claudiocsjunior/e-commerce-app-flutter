@@ -13,7 +13,7 @@ abstract class _CategoryStoreBase with Store {
   }
 
   @observable
-  ObservableStream<List<CategoryModel>> categoryList;
+  ObservableStream<List<CategoryModel>>? categoryList;
 
   @action
   getList() {
@@ -32,7 +32,7 @@ abstract class _CategoryStoreBase with Store {
     return repository.delete(categoryModel);
   }
 
-  Future<bool> initValues() async {
+  initValues() async {
     await Future.delayed(Duration(seconds: 1));
     await getList();
   }
