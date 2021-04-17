@@ -92,6 +92,13 @@ mixin _$StockStore on _StockStoreBase, Store {
     });
   }
 
+  final _$setTotalAsyncAction = AsyncAction('_StockStoreBase.setTotal');
+
+  @override
+  Future setTotal() {
+    return _$setTotalAsyncAction.run(() => super.setTotal());
+  }
+
   final _$updateQuantityAsyncAction =
       AsyncAction('_StockStoreBase.updateQuantity');
 
@@ -121,17 +128,6 @@ mixin _$StockStore on _StockStoreBase, Store {
         name: '_StockStoreBase.setSearch');
     try {
       return super.setSearch(value);
-    } finally {
-      _$_StockStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setTotal() {
-    final _$actionInfo = _$_StockStoreBaseActionController.startAction(
-        name: '_StockStoreBase.setTotal');
-    try {
-      return super.setTotal();
     } finally {
       _$_StockStoreBaseActionController.endAction(_$actionInfo);
     }

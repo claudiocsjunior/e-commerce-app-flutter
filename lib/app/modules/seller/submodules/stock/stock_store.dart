@@ -58,23 +58,14 @@ abstract class _StockStoreBase with Store {
   }
 
   @action
-  setTotal(){
-    List<ProductModel>? products = productList!.data;
-
-    if(products != null){
-      products.forEach((ProductModel element) {
-        if(total == null){
-          total = 0;
-        }
-
-        total = total! + element.quantity;
-      });
-    }
+  setTotal() async{
+    total = await repository.countAllStock();
   }
 
   initValues() async {
     await Future.delayed(Duration(seconds: 1));
     await getList();
+    setTotal();
   }
 
   @action

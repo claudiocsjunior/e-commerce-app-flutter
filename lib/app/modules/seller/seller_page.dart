@@ -65,7 +65,7 @@ class SellerPageState extends ModularState<SellerPage, SellerStore> {
                     Text(controller.quantityStock.toString() + " Unidades", style: TextStyle(fontSize: TextSize.normal, color: Colors.white),)
                 );
               },),
-              onPress: () {},
+              onPress: controller.toStock,
             ),
             CardWidget(
               icon: Icons.shopping_cart,
@@ -94,7 +94,7 @@ class SellerPageState extends ModularState<SellerPage, SellerStore> {
                     Text(controller.quantityProducts.toString() + " Produtos", style: TextStyle(fontSize: TextSize.normal, color: Colors.white),)
                 );
               },),
-              onPress: () {},
+              onPress: controller.toProduct,
             ),
             CardWidget(
               icon: Icons.category_rounded,
@@ -123,7 +123,7 @@ class SellerPageState extends ModularState<SellerPage, SellerStore> {
                     Text(controller.quantityCategories.toString() + " Categorias", style: TextStyle(fontSize: TextSize.normal, color: Colors.white),)
                 );
               },),
-              onPress: () {},
+              onPress: controller.toCategoty,
             ),
             CardWidget(
               icon: Icons.double_arrow_outlined,

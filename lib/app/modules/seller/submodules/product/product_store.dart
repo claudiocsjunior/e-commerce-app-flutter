@@ -95,8 +95,9 @@ abstract class _ProductStoreBase with Store {
     Modular.to.pushNamed("/seller/product/edit", arguments: productModel);
   }
 
-
+  @action
   initValues() async {
+    products = List.generate(0, (index) => ProductModel());
     await Future.delayed(Duration(seconds: 1));
     await getList();
   }

@@ -27,16 +27,22 @@ class AuthRepository implements IauthRepository {
   }
 
   @override
-  Future<User> getUser() async {
-    User user = _auth.currentUser!;
+  Future<User?> getUser() async {
+    try{
+      User user = _auth.currentUser!;
 
-    // if(user != null){
-    //   if (!user.emailVerified) {
-    //     await user.sendEmailVerification();
-    //   }
-    // }
+      // if(user != null){
+      //   if (!user.emailVerified) {
+      //     await user.sendEmailVerification();
+      //   }
+      // }
 
-    return user;
+      return user;
+    }catch(e){
+      await logOut();
+      return null;
+    }
+
   }
 
   @override

@@ -39,10 +39,6 @@ class StockPageState extends ModularState<StockPage, StockStore> {
   void initState() {
     super.initState();
     controller.initValues();
-
-    var timer = Timer(Duration(seconds: 2), () {
-      controller.setTotal();
-    });
   }
 
   @override

@@ -84,6 +84,13 @@ mixin _$ProductStore on _ProductStoreBase, Store {
     return _$getListAsyncAction.run(() => super.getList());
   }
 
+  final _$initValuesAsyncAction = AsyncAction('_ProductStoreBase.initValues');
+
+  @override
+  Future initValues() {
+    return _$initValuesAsyncAction.run(() => super.initValues());
+  }
+
   final _$_ProductStoreBaseActionController =
       ActionController(name: '_ProductStoreBase');
 

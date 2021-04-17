@@ -19,6 +19,8 @@ class ProductPage extends StatefulWidget {
 }
 
 class ProductPageState extends ModularState<ProductPage, ProductStore> {
+
+
   ScrollController _scrollController = ScrollController(
     initialScrollOffset: 10, // or whatever offset you wish
     keepScrollOffset: true,
