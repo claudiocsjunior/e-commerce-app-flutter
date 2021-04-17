@@ -37,6 +37,13 @@ class CategoryRepository implements ICategoryRepository{
     return firestore.collection("category").doc(documentReference.id).get();
   }
 
+  @override
+  Future<int> countAll() async {
+    QuerySnapshot querySnapshot = await firestore.collection("category").get();
+    int total = querySnapshot.docs.length;
+    return total;
+  }
+
 
 
 

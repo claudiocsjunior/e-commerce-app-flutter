@@ -35,6 +35,12 @@ abstract class _StockStoreBase with Store {
   @observable
   String? search;
 
+  @observable
+  int? total;
+
+  @observable
+  int quantityDefault = 0;
+
   @computed
   List<ProductModel?> get computedProducts{
     List<ProductModel> products = productList!.data;
@@ -49,6 +55,21 @@ abstract class _StockStoreBase with Store {
   @action
   setSearch(value){
     search = value;
+  }
+
+  @action
+  setTotal(){
+    List<ProductModel>? products = productList!.data;
+
+    if(products != null){
+      products.forEach((ProductModel element) {
+        if(total == null){
+          total = 0;
+        }
+
+        total = total! + element.quantity;
+      });
+    }
   }
 
   initValues() async {
@@ -68,10 +89,17 @@ abstract class _StockStoreBase with Store {
     productSelected = value;
   }
 
+  @action
+  setQuantityDefault(value){
+    quantityDefault = value;
+  }
+
 
   @action
   updateQuantity(ProductModel productModel) async {
-    print(productModel.quantity);
+    List<ProductModel> products = productList!.data;
+    total = total! - quantityDefault;
+    total = total! + productModel.quantity;
     await repository.updateQuantity(productModel);
   }
 

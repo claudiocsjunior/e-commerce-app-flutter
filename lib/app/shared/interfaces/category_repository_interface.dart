@@ -9,4 +9,5 @@ abstract class ICategoryRepository{
   Future update(CategoryModel categoryModel);
   Future delete(CategoryModel categoryModel);
   Future getByReference(DocumentReference documentReference);
+  Future<int> countAll();
 }

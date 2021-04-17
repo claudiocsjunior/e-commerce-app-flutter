@@ -75,4 +75,24 @@ class ProductRepository implements IProductRepository {
     });
   }
 
+  @override
+  Future<int> countAll() async{
+    QuerySnapshot querySnapshot = await firestore.collection("product").get();
+    int total = querySnapshot.docs.length;
+    return total;
+  }
+
+  @override
+  Future<int> countAllStock() async{
+    QuerySnapshot querySnapshot = await firestore.collection("product").get();
+    int total = 0;
+
+    for(var doc in querySnapshot.docs){
+      ProductModel productModel = ProductModel.fromDocument(doc, CategoryModel());
+      total = total + productModel.quantity;
+    }
+
+    return total;
+  }
+
 }

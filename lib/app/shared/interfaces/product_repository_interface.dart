@@ -9,4 +9,6 @@ abstract class IProductRepository{
   Future updateQuantity(ProductModel productModel);
   Future delete(ProductModel productModel);
   Future<QuerySnapshot> getAllPaginate(ProductModel? productModel);
+  Future<int> countAll();
+  Future<int> countAllStock();
 }

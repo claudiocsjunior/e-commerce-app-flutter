@@ -62,6 +62,36 @@ mixin _$StockStore on _StockStoreBase, Store {
     });
   }
 
+  final _$totalAtom = Atom(name: '_StockStoreBase.total');
+
+  @override
+  int? get total {
+    _$totalAtom.reportRead();
+    return super.total;
+  }
+
+  @override
+  set total(int? value) {
+    _$totalAtom.reportWrite(value, super.total, () {
+      super.total = value;
+    });
+  }
+
+  final _$quantityDefaultAtom = Atom(name: '_StockStoreBase.quantityDefault');
+
+  @override
+  int get quantityDefault {
+    _$quantityDefaultAtom.reportRead();
+    return super.quantityDefault;
+  }
+
+  @override
+  set quantityDefault(int value) {
+    _$quantityDefaultAtom.reportWrite(value, super.quantityDefault, () {
+      super.quantityDefault = value;
+    });
+  }
+
   final _$updateQuantityAsyncAction =
       AsyncAction('_StockStoreBase.updateQuantity');
 
@@ -97,6 +127,17 @@ mixin _$StockStore on _StockStoreBase, Store {
   }
 
   @override
+  dynamic setTotal() {
+    final _$actionInfo = _$_StockStoreBaseActionController.startAction(
+        name: '_StockStoreBase.setTotal');
+    try {
+      return super.setTotal();
+    } finally {
+      _$_StockStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setProductQuantity(ProductModel? productModel, String? value) {
     final _$actionInfo = _$_StockStoreBaseActionController.startAction(
         name: '_StockStoreBase.setProductQuantity');
@@ -119,11 +160,24 @@ mixin _$StockStore on _StockStoreBase, Store {
   }
 
   @override
+  dynamic setQuantityDefault(dynamic value) {
+    final _$actionInfo = _$_StockStoreBaseActionController.startAction(
+        name: '_StockStoreBase.setQuantityDefault');
+    try {
+      return super.setQuantityDefault(value);
+    } finally {
+      _$_StockStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 productList: ${productList},
 productSelected: ${productSelected},
 search: ${search},
+total: ${total},
+quantityDefault: ${quantityDefault},
 computedProducts: ${computedProducts}
     ''';
   }

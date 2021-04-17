@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:e_commerce_app/app/modules/seller/enums/page-enum-bottom-nav.dart';
 import 'package:e_commerce_app/app/modules/seller/submodules/stock/stock_store.dart';
 import 'package:e_commerce_app/app/modules/seller/widgets/dash-board/dash-board.dart';
@@ -37,6 +39,10 @@ class StockPageState extends ModularState<StockPage, StockStore> {
   void initState() {
     super.initState();
     controller.initValues();
+
+    var timer = Timer(Duration(seconds: 2), () {
+      controller.setTotal();
+    });
   }
 
   @override
@@ -72,6 +78,17 @@ class StockPageState extends ModularState<StockPage, StockStore> {
               );
             }),
           ),
+          Observer(builder: (_){
+            if(controller.total == null){
+              return Center(
+                child: RefreshProgressIndicator(),
+              );
+            }
+
+            return Center(
+              child: Text("Estoque total: " + controller.total.toString(), style: TextStyle(fontSize: TextSize.normal),),
+            );
+          }),
           Expanded(child: Observer(builder: (_) {
             if (controller.productList == null) {
               return Center(
@@ -134,7 +151,10 @@ class StockPageState extends ModularState<StockPage, StockStore> {
                         Icons.more_vert,
                         color: TextColor.colorSecondary,
                       ),
-                      onPressed: () => _showDialog(productModel),
+                      onPressed: () {
+                        controller.setQuantityDefault(productModel.quantity);
+                        _showDialog(productModel);
+                      },
                     ),
                   );
                 });
