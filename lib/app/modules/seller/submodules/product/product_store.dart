@@ -52,7 +52,7 @@ abstract class _ProductStoreBase with Store {
 
   @action
   getList() async{
-    if(products == null){
+    if(lastProduct.reference == null){
       loading = true;
       //products = List<ProductModel>();
     }
@@ -84,7 +84,8 @@ abstract class _ProductStoreBase with Store {
   }
 
   Future delete(ProductModel productModel) async{
-    return repository.delete(productModel);
+    repository.delete(productModel);
+    initValues();
   }
 
   toCreateProduct(){
@@ -98,7 +99,8 @@ abstract class _ProductStoreBase with Store {
   @action
   initValues() async {
     products = List.generate(0, (index) => ProductModel());
-    await Future.delayed(Duration(seconds: 1));
+    lastProduct = ProductModel();
+    //await Future.delayed(Duration(seconds: 1));
     await getList();
   }
 

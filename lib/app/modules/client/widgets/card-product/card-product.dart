@@ -5,6 +5,7 @@ import 'package:e_commerce_app/app/shared/config/text-color.dart';
 import 'package:e_commerce_app/app/shared/config/text-size.dart';
 import 'package:e_commerce_app/app/shared/models/product_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CardProduct extends StatelessWidget {
   ProductModel productModel;
@@ -17,7 +18,7 @@ class CardProduct extends StatelessWidget {
     return
       Container(
           margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          height: 560,
+          height: 600,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -56,7 +57,7 @@ class CardProduct extends StatelessWidget {
         ),
         Container(
           alignment: Alignment.centerLeft,
-          height: 20,
+          height: 60,
           child: Text(
             productModel.description!,
             style: TextStyle(
@@ -77,7 +78,7 @@ class CardProduct extends StatelessWidget {
           alignment: Alignment.centerLeft,
           height: 40,
           child: Text(
-            productModel.price.toString() + " Reais",
+            NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$').format(productModel.price).toString(),
             style: TextStyle(
                 color: TextColor.colorSuccess,
                 fontSize: TextSize.medium),

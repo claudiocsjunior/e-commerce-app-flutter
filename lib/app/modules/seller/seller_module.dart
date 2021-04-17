@@ -31,3 +31,4 @@ class SellerModule extends Module {
     ModuleRoute("/stock", module: StockModule(), transition: TransitionType.noTransition),
   ];
 }
+

@@ -43,6 +43,13 @@ class ClientPageState extends ModularState<ClientPage, ClientStore> {
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
+          _scrollController.position.minScrollExtent) {
+
+        controller.initStateProduct();
+        controller.getListProdcut();
+      }
+
+      if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         ScaffoldMessenger.of(context).showSnackBar(snackBarLoading);
         controller.getListProdcut();
@@ -56,36 +63,56 @@ class ClientPageState extends ModularState<ClientPage, ClientStore> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return DashBoard(
         titulo: "E-commerce",
-        body: Observer(builder: (_) {
-          if (controller.loading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+        body: Column(
+          children: [
+            Container(
+              height: 100,
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              child: Observer(builder: (_) {
+                return Container(
+                  margin: EdgeInsets.only(top: 20),
+                  child: TextFormField(
+                    initialValue: controller.search,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      icon: Icon(Icons.filter_alt),
+                      hintText: "Filtrar por...",
+                    ),
+                    onChanged: (value) => controller.setSearch(value),
+                  ),
+                );
+              }),
+            ),
+           Expanded(child:  Observer(builder: (_) {
+             if (controller.loading) {
+               return Center(
+                 child: CircularProgressIndicator(),
+               );
+             }
 
-          if (controller.computedProducts.length == 0) {
-            return Center(
-                child: Text(
-                  "Nenhum produto encontrado",
-                  style: TextStyle(color: TextColor.colorSecondaryB),
-                ));
-          }
+             if (controller.computedProducts.length == 0) {
+               return Center(
+                   child: Text(
+                     "Nenhum produto encontrado",
+                     style: TextStyle(color: TextColor.colorSecondaryB),
+                   ));
+             }
 
-          return ListView.builder(
-              shrinkWrap: true,
-              itemCount: controller.computedProducts.length,
-              controller: _scrollController,
-              itemBuilder: (_, index) {
-                ProductModel productModel =
-                controller.computedProducts[index]!;
+             return ListView.builder(
+                 shrinkWrap: true,
+                 itemCount: controller.computedProducts.length,
+                 controller: _scrollController,
+                 itemBuilder: (_, index) {
+                   ProductModel productModel = controller.computedProducts[index]!;
 
-                return CardProduct(productModel: productModel);
-              });
-        }));
+                   return CardProduct(productModel: productModel);
+                 });
+           }))
+          ],
+        ));
   }
 }

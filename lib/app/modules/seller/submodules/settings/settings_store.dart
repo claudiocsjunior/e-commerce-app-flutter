@@ -81,7 +81,9 @@ abstract class _SettingsStoreBase with Store {
   @action
   getDados() {
     email = authStore.user!.email!;
-    name = authStore.user!.displayName!;
+    if(authStore.user!.displayName != null){
+      name = authStore.user!.displayName!;
+    }
   }
 
   @action

@@ -60,7 +60,7 @@ abstract class _ClientStoreBase with Store {
 
   @action
   getListProdcut() async{
-    if(products == null){
+    if(lastProduct.reference == null){
       loading = true;
       //products = List<ProductModel>();
     }
@@ -72,17 +72,17 @@ abstract class _ClientStoreBase with Store {
       DocumentReference categoryReference = productDoc['categoryReference'];
       DocumentSnapshot categorySnapshot = await categoryRepository.getByReference(categoryReference);
       ProductModel product = ProductModel.fromDocument(productDoc, CategoryModel.fromDocument(categorySnapshot));
-      productsList.add(product);
 
       Directory tempDir = await getTemporaryDirectory();
       String tempPath = tempDir.path;
       var filePath = tempPath + '/'+ product.reference!.id;
 
       product.image = await File(filePath).writeAsBytes(base64Decode(product.photo!));
+      productsList.add(product);
       //tempDir.deleteSync(recursive: true);
-
-      lastProduct = productsList.last;
     }
+
+    lastProduct = productsList.last;
 
     if(productsList.length > 0){
       products.addAll(productsList);
@@ -91,6 +91,11 @@ abstract class _ClientStoreBase with Store {
     loading = false;
   }
 
+  @action
+  initStateProduct(){
+    lastProduct = ProductModel();
+    products = List.generate(0, (index) => ProductModel());
+  }
 
   @action
   getDados() async{
