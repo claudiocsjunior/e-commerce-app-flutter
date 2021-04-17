@@ -42,4 +42,8 @@ abstract class _ClientStoreBase with Store {
   toHomePage(){
     Modular.to.popUntil(ModalRoute.withName('/client/'));
   }
+
+  toCategories(){
+    Modular.to.pushNamedAndRemoveUntil("/client/category", ModalRoute.withName('/client/'));
+  }
 }

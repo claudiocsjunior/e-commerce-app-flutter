@@ -17,6 +17,7 @@ class DrawerOptions extends StatelessWidget {
           leading: Icon(Icons.category_rounded),
           title: Text("Categorias"),
           trailing: Icon(Icons.keyboard_arrow_right),
+          onTap: Modular.get<ClientStore>().toCategories
         ),
         ListTile(
           leading: Icon(Icons.shopping_cart),

@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/app/modules/client/client_store.dart';
+import 'package:e_commerce_app/app/modules/client/submodules/category/category_module.dart';
 import 'package:e_commerce_app/app/modules/client/submodules/settings/settings_module.dart';
+import 'package:e_commerce_app/app/shared/interfaces/category_repository_interface.dart';
+import 'package:e_commerce_app/app/shared/repositories/category_repository.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'client_page.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +11,7 @@ import 'package:flutter/material.dart';
 class ClientModule extends Module {
   @override
   final List<Bind> binds = [
+    Bind.lazySingleton<ICategoryRepository>((i) => CategoryRepository(FirebaseFirestore.instance)),
     Bind.lazySingleton((i) => ClientStore()),
   ];
 
@@ -14,5 +19,6 @@ class ClientModule extends Module {
   final List<ModularRoute> routes = [
     ChildRoute(Modular.initialRoute, child: (_, args) => ClientPage()),
     ModuleRoute("/settings", module: SettingsModule()),
+    ModuleRoute("/category", module: CategoryModule()),
   ];
 }
