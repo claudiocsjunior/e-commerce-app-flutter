@@ -26,13 +26,17 @@ class ProductRepository implements IProductRepository {
 
   @override
   Future save(ProductModel productModel) async {
+    int total = await countAll();
+    total = total + 1;
+
     productModel.reference = await firestore.collection('product').add({
       'name': productModel.name,
       'description': productModel.description,
       'photo': productModel.photo,
       'price': productModel.price,
       'categoryReference': productModel.categoryModel!.reference,
-      'quantity': productModel.quantity
+      'quantity': productModel.quantity,
+      'order': total,
     });
   }
 
@@ -44,7 +48,8 @@ class ProductRepository implements IProductRepository {
     'photo': productModel.photo,
     'price': productModel.price,
     'categoryReference': productModel.categoryModel!.reference,
-    'quantity': productModel.quantity
+    'quantity': productModel.quantity,
+    'order': productModel.order,
     });
   }
 
@@ -59,10 +64,10 @@ class ProductRepository implements IProductRepository {
   Future<QuerySnapshot> getAllPaginate(ProductModel? productModel) async {
     var productsStream;
     if(productModel == null){
-      productsStream = await firestore.collection("product").orderBy("name").limit(10).get();
+      productsStream = await firestore.collection("product").orderBy("order", descending: true).limit(20).get();
     }else{
       DocumentSnapshot lastProductSnapshot = await firestore.collection("product").doc(productModel.reference!.id).get();
-      productsStream = await firestore.collection("product").orderBy("name").startAfterDocument(lastProductSnapshot).limit(10).get();
+      productsStream = await firestore.collection("product").orderBy("order", descending: true).startAfterDocument(lastProductSnapshot).limit(20).get();
     }
 
     return productsStream;

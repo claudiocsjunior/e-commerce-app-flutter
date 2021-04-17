@@ -16,6 +16,7 @@ class ProductModel {
   CategoryModel? categoryModel;
   File? image;
   int quantity ;
+  int? order;
 
   ProductModel(
       {this.categoryReference,
@@ -26,7 +27,8 @@ class ProductModel {
       this.reference,
       this.categoryModel,
       this.image,
-      this.quantity = 0
+      this.quantity = 0,
+      this.order
       });
 
   factory ProductModel.fromDocument(DocumentSnapshot doc, CategoryModel categoryModel) {
@@ -39,7 +41,8 @@ class ProductModel {
         reference: doc.reference,
         categoryModel: categoryModel,
         image: null,
-        quantity: doc['quantity']);
+        quantity: doc['quantity'],
+        order: doc['order'],);
   }
 
   processImage() async {
