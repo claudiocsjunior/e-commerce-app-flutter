@@ -64,10 +64,10 @@ class ProductRepository implements IProductRepository {
   Future<QuerySnapshot> getAllPaginate(ProductModel? productModel) async {
     var productsStream;
     if(productModel == null){
-      productsStream = await firestore.collection("product").orderBy("order", descending: true).limit(20).get();
+      productsStream = await firestore.collection("product").orderBy("order", descending: true).limit(10).get();
     }else{
       DocumentSnapshot lastProductSnapshot = await firestore.collection("product").doc(productModel.reference!.id).get();
-      productsStream = await firestore.collection("product").orderBy("order", descending: true).startAfterDocument(lastProductSnapshot).limit(20).get();
+      productsStream = await firestore.collection("product").orderBy("order", descending: true).startAfterDocument(lastProductSnapshot).limit(10).get();
     }
 
     return productsStream;

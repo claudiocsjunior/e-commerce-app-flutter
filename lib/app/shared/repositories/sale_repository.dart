@@ -37,8 +37,7 @@ class SaleRepository implements ISaleRepository {
 
   @override
   Future delete(SaleModel saleModel) {
-    // TODO: implement delete
-    throw UnimplementedError();
+    return saleModel.reference!.delete();
   }
 
   @override
@@ -59,6 +58,8 @@ class SaleRepository implements ISaleRepository {
       DocumentSnapshot categorySnapshot = await categoryRepository.getByReference(categoryReference);
 
       ProductModel product = ProductModel.fromDocument(productSnapshot, CategoryModel.fromDocument(categorySnapshot));
+
+      await product.processImage();
 
       SaleModel sale = SaleModel.fromDocument(doc, product);
 

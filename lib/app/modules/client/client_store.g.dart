@@ -137,6 +137,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$refreshAtom = Atom(name: '_ClientStoreBase.refresh');
+
+  @override
+  bool get refresh {
+    _$refreshAtom.reportRead();
+    return super.refresh;
+  }
+
+  @override
+  set refresh(bool value) {
+    _$refreshAtom.reportWrite(value, super.refresh, () {
+      super.refresh = value;
+    });
+  }
+
   final _$getProductsCartAsyncAction =
       AsyncAction('_ClientStoreBase.getProductsCart');
 
@@ -184,6 +199,28 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setRefresh(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setRefresh');
+    try {
+      return super.setRefresh(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic refreshList() {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.refreshList');
+    try {
+      return super.refreshList();
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic initStateProduct() {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.initStateProduct');
@@ -205,6 +242,7 @@ name: ${name},
 email: ${email},
 userId: ${userId},
 productsCart: ${productsCart},
+refresh: ${refresh},
 computedProducts: ${computedProducts}
     ''';
   }

@@ -6,6 +6,7 @@ import 'package:e_commerce_app/app/shared/config/text-color.dart';
 import 'package:e_commerce_app/app/shared/config/text-size.dart';
 import 'package:e_commerce_app/app/shared/models/product_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 
@@ -78,7 +79,7 @@ class CardProduct extends StatelessWidget {
                       "Disponível: " + productModel.quantity.toString() +
                           " unidades",
                       style: TextStyle(
-                          fontSize: TextSize.small),
+                          fontSize: TextSize.small, color: productModel.quantity > 0 ? TextColor.colorSuccess : TextColor.colorDanger),
                     ),
                   ),
                   Container(
@@ -98,23 +99,39 @@ class CardProduct extends StatelessWidget {
                     height: 1,
                     color: BackgroundColor.colorSecondary,
                   ),
-                  ListTile(
-                    onTap: () async{
-                    ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text('Aguarde'), backgroundColor: BackgroundColor.colorPrimary, duration: Duration(seconds: 1),));
-                    await Modular.get <ClientStore>().addProductCart(productModel);
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBar(content: Text('Produto adicionado no carrinho'), backgroundColor: BackgroundColor.colorPrimary, duration: Duration(milliseconds: 500)));
-                  },
-                    title: Text(
-                      "Adicionar ao carrinho",
-                      style: TextStyle(
-                          fontSize: TextSize.normal,
-                          color: TextColor.colorSecondaryB),
-                    ),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                  )
+                  AddCart(productModel, context)
                 ],
               )));
   }
+  Widget AddCart(ProductModel productModel, context){
+    if(productModel.quantity > 0){
+      return ListTile(
+        onTap: () async{
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Aguarde'), backgroundColor: BackgroundColor.colorPrimary, duration: Duration(seconds: 1),));
+          await Modular.get <ClientStore>().addProductCart(productModel);
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Produto adicionado no carrinho'), backgroundColor: BackgroundColor.colorPrimary, duration: Duration(milliseconds: 500)));
+        },
+        title: Text(
+          "Adicionar ao carrinho",
+          style: TextStyle(
+              fontSize: TextSize.normal,
+              color: TextColor.colorSecondaryB),
+        ),
+        trailing: Icon(Icons.keyboard_arrow_right),
+      );
+    }
+
+    return Container(
+      height: 50,
+        alignment: Alignment.centerLeft,
+        child: Text(
+          "Indisponível",
+          style: TextStyle(
+              fontSize: TextSize.normal,
+              color: TextColor.colorSecondaryB),
+        ));
+  }
+
 }

@@ -23,13 +23,11 @@ class ClientPage extends StatefulWidget {
 
 class ClientPageState extends ModularState<ClientPage, ClientStore> {
   ScrollController _scrollController = ScrollController(
-    initialScrollOffset: 10, // or whatever offset you wish
-    keepScrollOffset: true,
   );
 
   final snackBarLoading = SnackBar(
       backgroundColor: BackgroundColor.colorWhite,
-      duration: Duration(seconds: 1),
+      duration: Duration(seconds: 2),
       content: Container(
           alignment: Alignment.center,
           height: 50,
@@ -39,17 +37,17 @@ class ClientPageState extends ModularState<ClientPage, ClientStore> {
   @override
   void initState() {
     super.initState();
-    controller.getDados();
 
     _scrollController.addListener(() {
-      // if (_scrollController.position.pixels ==
-      //     _scrollController.position.minScrollExtent) {
-      //
-      //   controller.initStateProduct();
-      //   controller.getListProdcut();
-      // }
-
       if (_scrollController.position.pixels ==
+          _scrollController.position.minScrollExtent) {
+        // controller.initStateProduct();
+        // controller.getListProdcut();
+
+        controller.setRefresh(true);
+      }
+
+      if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent) {
         ScaffoldMessenger.of(context).showSnackBar(snackBarLoading);
         controller.getListProdcut();
@@ -87,31 +85,52 @@ class ClientPageState extends ModularState<ClientPage, ClientStore> {
                 );
               }),
             ),
-           Expanded(child:  Observer(builder: (_) {
-             if (controller.loading) {
-               return Center(
-                 child: CircularProgressIndicator(),
-               );
-             }
+            Observer(builder: (_) {
+              if (controller.refresh) {
+                return InkWell(
+                  onTap: controller.refreshList,
+                  child: Container(
+                    margin: EdgeInsets.all(20),
+                    height: 30,
+                    width: 30,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: BackgroundColor.colorWhite,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                            width: 2.0, color: BackgroundColor.colorSecondary)),
+                    child: Icon(Icons.refresh, color: BackgroundColor.colorPrimary,),
+                  ),
+                );
+              }
 
-             if (controller.computedProducts.length == 0) {
-               return Center(
-                   child: Text(
-                     "Nenhum produto encontrado",
-                     style: TextStyle(color: TextColor.colorSecondaryB),
-                   ));
-             }
+              return Container();
+            }),
+            Expanded(child: Observer(builder: (_) {
+              if (controller.loading) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
 
-             return ListView.builder(
-                 shrinkWrap: true,
-                 itemCount: controller.computedProducts.length,
-                 controller: _scrollController,
-                 itemBuilder: (_, index) {
-                   ProductModel productModel = controller.computedProducts[index]!;
+              if (controller.computedProducts.length == 0) {
+                return Center(
+                    child: Text(
+                  "Nenhum produto encontrado",
+                  style: TextStyle(color: TextColor.colorSecondaryB),
+                ));
+              }
 
-                   return CardProduct(productModel: productModel);
-                 });
-           }))
+              return ListView.builder(
+                  itemCount: controller.computedProducts.length,
+                  controller: _scrollController,
+                  itemBuilder: (_, index) {
+                    ProductModel productModel =
+                        controller.computedProducts[index]!;
+
+                    return CardProduct(productModel: productModel);
+                  });
+            }))
           ],
         ));
   }

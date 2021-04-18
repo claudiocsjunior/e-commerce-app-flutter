@@ -54,6 +54,10 @@ abstract class _ClientStoreBase with Store {
   @observable
   int? productsCart;
 
+  @observable
+  bool refresh = false;
+
+
   @action
   getProductsCart() async{
     productsCart = await saleRepository.countAllByUserNotFinalized(userId);
@@ -63,6 +67,19 @@ abstract class _ClientStoreBase with Store {
   setSearch(value){
     search = value;
   }
+
+  @action
+  setRefresh(value){
+    refresh = value;
+  }
+
+  @action
+  refreshList(){
+    refresh = false;
+    initStateProduct();
+    getListProdcut();
+  }
+
 
   @action
   addProductCart(ProductModel productModel) async{
