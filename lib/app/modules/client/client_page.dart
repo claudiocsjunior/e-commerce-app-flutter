@@ -42,12 +42,12 @@ class ClientPageState extends ModularState<ClientPage, ClientStore> {
     controller.getDados();
 
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.minScrollExtent) {
-
-        controller.initStateProduct();
-        controller.getListProdcut();
-      }
+      // if (_scrollController.position.pixels ==
+      //     _scrollController.position.minScrollExtent) {
+      //
+      //   controller.initStateProduct();
+      //   controller.getListProdcut();
+      // }
 
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {

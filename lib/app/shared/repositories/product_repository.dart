@@ -100,4 +100,9 @@ class ProductRepository implements IProductRepository {
     return total;
   }
 
+  @override
+  Future getByReference(DocumentReference documentReference) async{
+    return firestore.collection("product").doc(documentReference.id).get();
+  }
+
 }

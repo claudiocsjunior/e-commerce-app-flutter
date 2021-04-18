@@ -107,6 +107,53 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$userIdAtom = Atom(name: '_ClientStoreBase.userId');
+
+  @override
+  String get userId {
+    _$userIdAtom.reportRead();
+    return super.userId;
+  }
+
+  @override
+  set userId(String value) {
+    _$userIdAtom.reportWrite(value, super.userId, () {
+      super.userId = value;
+    });
+  }
+
+  final _$productsCartAtom = Atom(name: '_ClientStoreBase.productsCart');
+
+  @override
+  int? get productsCart {
+    _$productsCartAtom.reportRead();
+    return super.productsCart;
+  }
+
+  @override
+  set productsCart(int? value) {
+    _$productsCartAtom.reportWrite(value, super.productsCart, () {
+      super.productsCart = value;
+    });
+  }
+
+  final _$getProductsCartAsyncAction =
+      AsyncAction('_ClientStoreBase.getProductsCart');
+
+  @override
+  Future getProductsCart() {
+    return _$getProductsCartAsyncAction.run(() => super.getProductsCart());
+  }
+
+  final _$addProductCartAsyncAction =
+      AsyncAction('_ClientStoreBase.addProductCart');
+
+  @override
+  Future addProductCart(ProductModel productModel) {
+    return _$addProductCartAsyncAction
+        .run(() => super.addProductCart(productModel));
+  }
+
   final _$getListProdcutAsyncAction =
       AsyncAction('_ClientStoreBase.getListProdcut');
 
@@ -156,6 +203,8 @@ lastProduct: ${lastProduct},
 search: ${search},
 name: ${name},
 email: ${email},
+userId: ${userId},
+productsCart: ${productsCart},
 computedProducts: ${computedProducts}
     ''';
   }

@@ -23,6 +23,7 @@ class DrawerOptions extends StatelessWidget {
           leading: Icon(Icons.shopping_cart),
           title: Text("Meu carrinho"),
           trailing: Icon(Icons.keyboard_arrow_right),
+          onTap: Modular.get<ClientStore>().toCartSales,
         ),
         ListTile(
           leading: Icon(Icons.shopping_cart),

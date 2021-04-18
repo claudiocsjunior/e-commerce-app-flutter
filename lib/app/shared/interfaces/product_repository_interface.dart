@@ -11,4 +11,5 @@ abstract class IProductRepository{
   Future<QuerySnapshot> getAllPaginate(ProductModel? productModel);
   Future<int> countAll();
   Future<int> countAllStock();
+  Future getByReference(DocumentReference documentReference);
 }

@@ -5,8 +5,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/app/shared/auth/auth_store.dart';
 import 'package:e_commerce_app/app/shared/interfaces/category_repository_interface.dart';
 import 'package:e_commerce_app/app/shared/interfaces/product_repository_interface.dart';
+import 'package:e_commerce_app/app/shared/interfaces/sale_repository_interface.dart';
 import 'package:e_commerce_app/app/shared/models/category_model.dart';
 import 'package:e_commerce_app/app/shared/models/product_model.dart';
+import 'package:e_commerce_app/app/shared/models/sale_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -21,9 +23,11 @@ abstract class _ClientStoreBase with Store {
 
   final ICategoryRepository categoryRepository;
   final IProductRepository productRepository;
+  final ISaleRepository saleRepository;
 
-  _ClientStoreBase(this.categoryRepository, this.productRepository){
+  _ClientStoreBase(this.categoryRepository, this.productRepository, this.saleRepository){
     getDados();
+    getProductsCart();
   }
 
   @observable
@@ -44,9 +48,36 @@ abstract class _ClientStoreBase with Store {
   @observable
   String email = '';
 
+  @observable
+  String userId = '';
+
+  @observable
+  int? productsCart;
+
+  @action
+  getProductsCart() async{
+    productsCart = await saleRepository.countAllByUserNotFinalized(userId);
+  }
+
   @action
   setSearch(value){
     search = value;
+  }
+
+  @action
+  addProductCart(ProductModel productModel) async{
+    SaleModel saleModel = await saleRepository.getByUserAndProductNotFinalized(userId, productModel);
+
+    if(saleModel.reference == null){
+      saleModel = SaleModel(userId: userId, quantity: 1, finalized: false, productReference: productModel.reference);
+      await saleRepository.save(saleModel);
+    }else{
+      saleModel.quantity = saleModel.quantity! + 1;
+      await saleRepository.update(saleModel);
+    }
+
+    productsCart = null;
+    getProductsCart();
   }
 
   @computed
@@ -99,7 +130,7 @@ abstract class _ClientStoreBase with Store {
 
   @action
   getDados() async{
-    print(authStore.user);
+    userId = authStore.user!.uid;
     email = authStore.user!.email!;
     if(authStore.user!.displayName != null){
       name = authStore.user!.displayName!;
@@ -124,4 +155,9 @@ abstract class _ClientStoreBase with Store {
   toCategories(){
     Modular.to.pushNamedAndRemoveUntil("/client/category", ModalRoute.withName('/client/'));
   }
+
+  toCartSales(){
+    Modular.to.pushNamedAndRemoveUntil("/client/cartSales", ModalRoute.withName('/client/'));
+  }
+
 }
