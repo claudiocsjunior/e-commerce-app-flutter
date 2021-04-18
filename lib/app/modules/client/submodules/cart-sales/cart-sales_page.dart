@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import '../../client_store.dart';
 import 'cart-sales_store.dart';
 
 class CartSalesPage extends StatefulWidget {
@@ -28,19 +29,29 @@ class CartSalesPageState extends ModularState<CartSalesPage, CartSalesStore> {
           margin: EdgeInsets.only(top: 20, left: 20, right: 20),
           child: Column(
             children: [
-              MaterialButton(
-                height: 30,
-                minWidth: MediaQuery.of(context).size.width - 40,
-                color: BackgroundColor.colorSuccess,
-                child: Text(
-                  "Finalizar compra",
-                  style: TextStyle(
-                    color: TextColor.colorPrimary,
-                    fontSize: TextSize.normal,
+              Observer(builder: (_) {
+                if (controller.loading) {
+                  return Container();
+                }
+
+                if (controller.salesCart.length == 0) {
+                  return Container();
+                }
+
+                return MaterialButton(
+                  height: 30,
+                  minWidth: MediaQuery.of(context).size.width - 40,
+                  color: BackgroundColor.colorSuccess,
+                  child: Text(
+                    "Finalizar compra",
+                    style: TextStyle(
+                      color: TextColor.colorPrimary,
+                      fontSize: TextSize.normal,
+                    ),
                   ),
-                ),
-                onPressed: controller.finalizedSales,
-              ),
+                  onPressed: Modular.get<ClientStore>().toPayment,
+                );
+              }),
               Expanded(child: Observer(builder: (_) {
                 if (controller.loading) {
                   return Center(
@@ -63,9 +74,10 @@ class CartSalesPageState extends ModularState<CartSalesPage, CartSalesStore> {
                       SaleModel saleModel = controller.salesCart[index];
 
                       return ListTile(
-                        onTap: (){
+                        onTap: () {
                           controller.setSaleCartSelected(saleModel);
-                          controller.setQuantitySelected(controller.saleCartSalected.quantity!);
+                          controller.setQuantitySelected(
+                              controller.saleCartSalected.quantity!);
                           _showDialog(saleModel);
                         },
                         title: Text(
@@ -87,12 +99,16 @@ class CartSalesPageState extends ModularState<CartSalesPage, CartSalesStore> {
                             Icons.delete,
                             color: TextColor.colorSecondary,
                           ),
-                          onPressed: () async{
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(SnackBar(content: Text('Aguarde'), backgroundColor: BackgroundColor.colorPrimary, duration: Duration(seconds: 1)));
+                          onPressed: () async {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text('Aguarde'),
+                                backgroundColor: BackgroundColor.colorPrimary,
+                                duration: Duration(seconds: 1)));
                             await controller.removeSaleCart(saleModel);
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(SnackBar(content: Text('Produto removido'), backgroundColor: BackgroundColor.colorPrimary, duration: Duration(seconds: 1)));
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text('Produto removido'),
+                                backgroundColor: BackgroundColor.colorPrimary,
+                                duration: Duration(seconds: 1)));
                           },
                         ),
                       );
@@ -109,28 +125,34 @@ class CartSalesPageState extends ModularState<CartSalesPage, CartSalesStore> {
       builder: (_) {
         return AlertDialog(
           title: Text("Alterar quantidade"),
-          content: Observer(builder: (_){
-            return Container(
-              height: 100,
-              child: Column(
-                children: [
-                  TextFormField(
-                    initialValue: controller.saleQuantity.toString(),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Valor",
+          content: Observer(
+            builder: (_) {
+              return Container(
+                height: 100,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      initialValue: controller.saleQuantity.toString(),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Valor",
+                      ),
+                      onChanged: (value) => controller.setSaleQuantity(value),
                     ),
-                    onChanged: (value) => controller.setSaleQuantity(value),
-                  ),
-                  Observer(builder: (_){
-                    return Container(
-                      margin: EdgeInsets.only(top: 10),
-                      child: Text(controller.error, style: TextStyle(color: TextColor.colorDanger),),);
-                  })
-                ],
-              ),
-            );
-          },),
+                    Observer(builder: (_) {
+                      return Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Text(
+                          controller.error,
+                          style: TextStyle(color: TextColor.colorDanger),
+                        ),
+                      );
+                    })
+                  ],
+                ),
+              );
+            },
+          ),
           actions: [
             TextButton(
                 onPressed: () {

@@ -47,6 +47,14 @@ class ClientPageState extends ModularState<ClientPage, ClientStore> {
         controller.setRefresh(true);
       }
 
+      if (_scrollController.position.pixels >
+          _scrollController.position.minScrollExtent) {
+        // controller.initStateProduct();
+        // controller.getListProdcut();
+
+        controller.setRefresh(false);
+      }
+
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent) {
         ScaffoldMessenger.of(context).showSnackBar(snackBarLoading);

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/app/modules/client/client_store.dart';
 import 'package:e_commerce_app/app/modules/client/submodules/cart-sales/cart-sales_module.dart';
 import 'package:e_commerce_app/app/modules/client/submodules/category/category_module.dart';
+import 'package:e_commerce_app/app/modules/client/submodules/finalized-sales/finalized-sales_module.dart';
 import 'package:e_commerce_app/app/modules/client/submodules/settings/settings_module.dart';
 import 'package:e_commerce_app/app/shared/interfaces/category_repository_interface.dart';
 import 'package:e_commerce_app/app/shared/interfaces/product_repository_interface.dart';
@@ -28,5 +29,6 @@ class ClientModule extends Module {
     ModuleRoute("/settings", module: SettingsModule()),
     ModuleRoute("/category", module: CategoryModule()),
     ModuleRoute("/cartSales", module: CartSalesModule()),
+    ModuleRoute("/finalizedSales", module: FinalizedSalesModule()),
   ];
 }

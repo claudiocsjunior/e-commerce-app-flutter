@@ -12,4 +12,5 @@ abstract class ISaleRepository{
   Future<SaleModel> getByUserAndProductNotFinalized(String userId, ProductModel productModel);
   Future<int> countAllByUserNotFinalized(String UserId);
   Future<int> countAllByUserFinalized(String UserId);
+  Future<List<SaleModel>> getAllByUserFinalized(String userId);
 }

@@ -177,4 +177,12 @@ abstract class _ClientStoreBase with Store {
     Modular.to.pushNamedAndRemoveUntil("/client/cartSales", ModalRoute.withName('/client/'));
   }
 
+  toFinalizedSales(){
+    Modular.to.pushNamedAndRemoveUntil("/client/finalizedSales", ModalRoute.withName('/client/'));
+  }
+
+  toPayment(){
+    Modular.to.pushNamed("/client/cartSales/payment");
+  }
+
 }

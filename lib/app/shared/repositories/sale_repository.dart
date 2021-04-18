@@ -70,6 +70,35 @@ class SaleRepository implements ISaleRepository {
   }
 
   @override
+  Future<List<SaleModel>> getAllByUserFinalized(String userId) async{
+    QuerySnapshot querySnapshot = await firestore
+        .collection("sale")
+        .where('user_id', isEqualTo: userId)
+        .where('finalized', isEqualTo: true)
+        .get();
+
+    List<SaleModel> sales = List.generate(0, (index) => SaleModel());
+
+    for(var doc in querySnapshot.docs){
+      DocumentReference productReference = doc['product_reference'];
+      DocumentSnapshot productSnapshot = await productRepository.getByReference(productReference);
+
+      DocumentReference categoryReference = productSnapshot['categoryReference'];
+      DocumentSnapshot categorySnapshot = await categoryRepository.getByReference(categoryReference);
+
+      ProductModel product = ProductModel.fromDocument(productSnapshot, CategoryModel.fromDocument(categorySnapshot));
+
+      await product.processImage();
+
+      SaleModel sale = SaleModel.fromDocument(doc, product);
+
+      sales.add(sale);
+    }
+
+    return sales;
+  }
+
+  @override
   Future getByReference(DocumentReference documentReference) {
     // TODO: implement getByReference
     throw UnimplementedError();
