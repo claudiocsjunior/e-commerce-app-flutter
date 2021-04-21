@@ -8,8 +8,10 @@ import 'package:e_commerce_app/app/modules/seller/submodules/settings/settings_m
 import 'package:e_commerce_app/app/modules/seller/submodules/stock/stock_module.dart';
 import 'package:e_commerce_app/app/shared/interfaces/category_repository_interface.dart';
 import 'package:e_commerce_app/app/shared/interfaces/product_repository_interface.dart';
+import 'package:e_commerce_app/app/shared/interfaces/sale_repository_interface.dart';
 import 'package:e_commerce_app/app/shared/repositories/category_repository.dart';
 import 'package:e_commerce_app/app/shared/repositories/product_repository.dart';
+import 'package:e_commerce_app/app/shared/repositories/sale_repository.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 
@@ -18,7 +20,8 @@ class SellerModule extends Module {
   final List<Bind> binds = [
     Bind.lazySingleton<ICategoryRepository>((i) => CategoryRepository(FirebaseFirestore.instance)),
     Bind.lazySingleton<IProductRepository>((i) => ProductRepository(FirebaseFirestore.instance)),
-    Bind.lazySingleton((i) => SellerStore(i.get<IProductRepository>(), i.get<ICategoryRepository>())),
+    Bind.lazySingleton<ISaleRepository>((i) => SaleRepository(FirebaseFirestore.instance, i.get<IProductRepository>(), i.get<ICategoryRepository>())),
+    Bind.lazySingleton((i) => SellerStore(i.get<IProductRepository>(), i.get<ICategoryRepository>(),i.get<ISaleRepository>())),
   ];
 
   @override

@@ -56,6 +56,21 @@ mixin _$SellerStore on _SellerStoreBase, Store {
     });
   }
 
+  final _$quantitySalesAtom = Atom(name: '_SellerStoreBase.quantitySales');
+
+  @override
+  int? get quantitySales {
+    _$quantitySalesAtom.reportRead();
+    return super.quantitySales;
+  }
+
+  @override
+  set quantitySales(int? value) {
+    _$quantitySalesAtom.reportWrite(value, super.quantitySales, () {
+      super.quantitySales = value;
+    });
+  }
+
   final _$getValuesAsyncAction = AsyncAction('_SellerStoreBase.getValues');
 
   @override
@@ -68,7 +83,8 @@ mixin _$SellerStore on _SellerStoreBase, Store {
     return '''
 quantityCategories: ${quantityCategories},
 quantityProducts: ${quantityProducts},
-quantityStock: ${quantityStock}
+quantityStock: ${quantityStock},
+quantitySales: ${quantitySales}
     ''';
   }
 }

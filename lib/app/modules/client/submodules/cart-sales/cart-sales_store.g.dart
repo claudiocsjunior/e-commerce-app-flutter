@@ -109,6 +109,14 @@ mixin _$CartSalesStore on _CartSalesStoreBase, Store {
     return _$updateQuantityAsyncAction.run(() => super.updateQuantity());
   }
 
+  final _$finalizedSalesAsyncAction =
+      AsyncAction('_CartSalesStoreBase.finalizedSales');
+
+  @override
+  Future<List<String>> finalizedSales() {
+    return _$finalizedSalesAsyncAction.run(() => super.finalizedSales());
+  }
+
   final _$_CartSalesStoreBaseActionController =
       ActionController(name: '_CartSalesStoreBase');
 
@@ -140,17 +148,6 @@ mixin _$CartSalesStore on _CartSalesStoreBase, Store {
         name: '_CartSalesStoreBase.setSaleQuantity');
     try {
       return super.setSaleQuantity(value);
-    } finally {
-      _$_CartSalesStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic finalizedSales() {
-    final _$actionInfo = _$_CartSalesStoreBaseActionController.startAction(
-        name: '_CartSalesStoreBase.finalizedSales');
-    try {
-      return super.finalizedSales();
     } finally {
       _$_CartSalesStoreBaseActionController.endAction(_$actionInfo);
     }

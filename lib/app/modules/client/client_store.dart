@@ -142,6 +142,7 @@ abstract class _ClientStoreBase with Store {
   initStateProduct(){
     lastProduct = ProductModel();
     products = List.generate(0, (index) => ProductModel());
+    getProductsCart();
   }
 
   @action

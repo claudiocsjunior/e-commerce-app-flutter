@@ -4,6 +4,8 @@ import 'package:e_commerce_app/app/shared/interfaces/sale_repository_interface.d
 import 'package:e_commerce_app/app/shared/interfaces/seller_repository_interface.dart';
 import 'package:e_commerce_app/app/shared/models/sale_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
 import 'package:mobx/mobx.dart';
 
 part 'cart-sales_store.g.dart';
@@ -89,15 +91,25 @@ abstract class _CartSalesStoreBase with Store {
   }
 
   @action
-  finalizedSales(){
+  Future<List<String>> finalizedSales()async {
+    List<String> productsNames = List.generate(0, (index) => '');
+
     for(SaleModel saleModel in salesCart){
       saleModel.finalized = true;
       saleModel.productModel!.quantity = saleModel.productModel!.quantity - saleModel.quantity!;
 
-      productRepository.update(saleModel.productModel!);
-      saleRepository.update(saleModel);
+      await productRepository.update(saleModel.productModel!);
+      await saleRepository.update(saleModel);
+
+      productsNames.add("<p>${"Produto: " + saleModel.productModel!.name! + " - Preço: " + saleModel.productModel!.price.toString() + " - Quantidade " + saleModel.quantity.toString()}</p>\n");
     }
+
+    return productsNames;
+
   }
+
+
+
 
 
 

@@ -139,4 +139,13 @@ class SaleRepository implements ISaleRepository {
 
       return SaleModel();
   }
+
+  @override
+  Future<int> countAllFinalized() async {
+    QuerySnapshot querySnapshot = await firestore
+        .collection("sale")
+        .get();
+    int total = querySnapshot.docs.length;
+    return total;
+  }
 }

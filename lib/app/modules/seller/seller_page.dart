@@ -131,12 +131,27 @@ class SellerPageState extends ModularState<SellerPage, SellerStore> {
               color1: Colors.lime,
               color2: Colors.lightGreen,
               color3: Colors.green,
-              content: Container(
-                  width: (MediaQuery.of(context).size.width - 50) * 0.5,
-                  alignment: Alignment.center,
-                  child:
-                  Text("100 Vendas", style: TextStyle(fontSize: TextSize.normal, color: Colors.white),)
-              ),
+              content:Observer(builder: (_){
+                if(controller.quantitySales == null ){
+                  return Container(
+                      width: (MediaQuery.of(context).size.width - 50) * 0.5,
+                      alignment: Alignment.center,
+                      child: Container(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(backgroundColor: Colors.white,),
+                      )
+
+                  );
+                }
+
+                return Container(
+                    width: (MediaQuery.of(context).size.width - 50) * 0.5,
+                    alignment: Alignment.center,
+                    child:
+                    Text(controller.quantitySales.toString() + " Vendas", style: TextStyle(fontSize: TextSize.normal, color: Colors.white),)
+                );
+              },),
               onPress: () {},
             ),
           ],

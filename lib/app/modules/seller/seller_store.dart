@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/app/shared/auth/auth_store.dart';
 import 'package:e_commerce_app/app/shared/interfaces/category_repository_interface.dart';
 import 'package:e_commerce_app/app/shared/interfaces/product_repository_interface.dart';
+import 'package:e_commerce_app/app/shared/interfaces/sale_repository_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -12,8 +13,9 @@ abstract class _SellerStoreBase with Store {
   AuthStore authStore = Modular.get();
   final IProductRepository productRepository;
   final ICategoryRepository categoryRepository;
+  final ISaleRepository saleRepository;
 
-  _SellerStoreBase(this.productRepository, this.categoryRepository){
+  _SellerStoreBase(this.productRepository, this.categoryRepository, this.saleRepository){
     getValues();
   }
 
@@ -26,11 +28,15 @@ abstract class _SellerStoreBase with Store {
   @observable
   int? quantityStock;
 
+  @observable
+  int? quantitySales;
+
   @action
   getValues() async {
     quantityStock = await productRepository.countAllStock();
     quantityProducts = await productRepository.countAll();
     quantityCategories = await categoryRepository.countAll();
+    quantitySales = await saleRepository.countAllFinalized();
   }
 
   LogOut(){

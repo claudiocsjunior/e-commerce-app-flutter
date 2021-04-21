@@ -39,7 +39,9 @@ class ClientPageState extends ModularState<ClientPage, ClientStore> {
   @override
   void initState() {
     super.initState();
+    controller.initStateProduct();
     controller.getDados(widget.category);
+    controller.getProductsCart();
 
 
     _scrollController.addListener(() {
