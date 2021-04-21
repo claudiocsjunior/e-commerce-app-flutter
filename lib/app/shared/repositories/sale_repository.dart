@@ -30,6 +30,7 @@ class SaleRepository implements ISaleRepository {
     QuerySnapshot querySnapshot = await firestore
         .collection("sale")
         .where('user_id', isEqualTo: userId)
+        .where('finalized', isEqualTo: true)
         .get();
     int total = querySnapshot.docs.length;
     return total;
@@ -144,8 +145,37 @@ class SaleRepository implements ISaleRepository {
   Future<int> countAllFinalized() async {
     QuerySnapshot querySnapshot = await firestore
         .collection("sale")
+        .where('finalized', isEqualTo: true)
         .get();
     int total = querySnapshot.docs.length;
     return total;
+  }
+
+  @override
+  Future<List<SaleModel>> getAllFinalized() async {
+    QuerySnapshot querySnapshot = await firestore
+        .collection("sale")
+        .where('finalized', isEqualTo: true)
+        .get();
+
+    List<SaleModel> sales = List.generate(0, (index) => SaleModel());
+
+    for(var doc in querySnapshot.docs){
+      DocumentReference productReference = doc['product_reference'];
+      DocumentSnapshot productSnapshot = await productRepository.getByReference(productReference);
+
+      DocumentReference categoryReference = productSnapshot['categoryReference'];
+      DocumentSnapshot categorySnapshot = await categoryRepository.getByReference(categoryReference);
+
+      ProductModel product = ProductModel.fromDocument(productSnapshot, CategoryModel.fromDocument(categorySnapshot));
+
+      await product.processImage();
+
+      SaleModel sale = SaleModel.fromDocument(doc, product);
+
+      sales.add(sale);
+    }
+
+    return sales;
   }
 }

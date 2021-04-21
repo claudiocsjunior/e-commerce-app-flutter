@@ -55,7 +55,7 @@ class BottomNavigation extends StatelessWidget {
             icon: Icon(Icons.double_arrow_outlined),
             onPressed: Modular
                 .get<SellerStore>()
-                .toHomePage,
+                .toSales,
           ),
           label: "Vendas",
         ),

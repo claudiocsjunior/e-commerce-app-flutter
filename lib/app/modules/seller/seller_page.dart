@@ -152,7 +152,7 @@ class SellerPageState extends ModularState<SellerPage, SellerStore> {
                     Text(controller.quantitySales.toString() + " Vendas", style: TextStyle(fontSize: TextSize.normal, color: Colors.white),)
                 );
               },),
-              onPress: () {},
+              onPress: controller.toSales,
             ),
           ],
         ),

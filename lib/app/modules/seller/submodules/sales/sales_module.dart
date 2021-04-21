@@ -1,0 +1,17 @@
+import 'package:e_commerce_app/app/modules/seller/submodules/sales/sales_store.dart';
+import 'package:e_commerce_app/app/shared/interfaces/sale_repository_interface.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter/material.dart';
+import 'sales_page.dart';
+
+class SalesModule extends Module {
+  @override
+  final List<Bind> binds = [
+    Bind.lazySingleton((i) => SalesStore(i.get<ISaleRepository>())),
+  ];
+
+  @override
+  final List<ModularRoute> routes = [
+    ChildRoute(Modular.initialRoute, child: (_, args) => SalesPage()),
+  ];
+}
