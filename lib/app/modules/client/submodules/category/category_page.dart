@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/app/modules/client/submodules/category/category_store.dart';
+import 'package:e_commerce_app/app/modules/client/client_store.dart';
 import 'package:e_commerce_app/app/modules/client/widgets/dashboard/dashboard.dart';
 import 'package:e_commerce_app/app/shared/config/text-color.dart';
 import 'package:e_commerce_app/app/shared/config/text-size.dart';
@@ -6,6 +6,7 @@ import 'package:e_commerce_app/app/shared/models/category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'category_store.dart';
 
 class CategoryPage extends StatefulWidget {
   final String title;
@@ -69,6 +70,7 @@ class CategoryPageState extends ModularState<CategoryPage, CategoryStore> {
                 CategoryModel categoryModel = listCategory[index];
 
                 return ListTile(
+                  onTap: () {Modular.get<ClientStore>().toHomeByCategory(categoryModel);},
                   title: Text(
                     categoryModel.description,
                     style: TextStyle(fontSize: TextSize.normal),

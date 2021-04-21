@@ -61,13 +61,22 @@ class ProductRepository implements IProductRepository {
   }
 
   @override
-  Future<QuerySnapshot> getAllPaginate(ProductModel? productModel) async {
+  Future<QuerySnapshot> getAllPaginate(ProductModel? productModel, CategoryModel? categoryModel) async {
     var productsStream;
     if(productModel == null){
-      productsStream = await firestore.collection("product").orderBy("order", descending: true).limit(10).get();
+      if(categoryModel == null){
+        productsStream = await firestore.collection("product").orderBy("order", descending: true).limit(10).get();
+      }else{
+        productsStream = await firestore.collection("product").where('categoryReference', isEqualTo: categoryModel.reference).orderBy("order", descending: true).limit(10).get();
+      }
+
     }else{
       DocumentSnapshot lastProductSnapshot = await firestore.collection("product").doc(productModel.reference!.id).get();
-      productsStream = await firestore.collection("product").orderBy("order", descending: true).startAfterDocument(lastProductSnapshot).limit(10).get();
+      if(categoryModel == null){
+        productsStream = await firestore.collection("product").orderBy("order", descending: true).startAfterDocument(lastProductSnapshot).limit(10).get();
+      }else{
+        productsStream = await firestore.collection("product").where('categoryReference', isEqualTo: categoryModel.reference).orderBy("order", descending: true).startAfterDocument(lastProductSnapshot).limit(10).get();
+      }
     }
 
     return productsStream;

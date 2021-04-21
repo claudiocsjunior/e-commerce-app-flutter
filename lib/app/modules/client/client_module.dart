@@ -30,5 +30,6 @@ class ClientModule extends Module {
     ModuleRoute("/category", module: CategoryModule()),
     ModuleRoute("/cartSales", module: CartSalesModule()),
     ModuleRoute("/finalizedSales", module: FinalizedSalesModule()),
+    ChildRoute("/productsByCategory", child: (_, args) => ClientPage(category: args.data)),
   ];
 }

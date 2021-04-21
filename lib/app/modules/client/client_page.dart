@@ -6,6 +6,7 @@ import 'package:e_commerce_app/app/modules/client/widgets/drawer-widget/drawer-w
 import 'package:e_commerce_app/app/shared/config/background-color.dart';
 import 'package:e_commerce_app/app/shared/config/text-color.dart';
 import 'package:e_commerce_app/app/shared/config/text-size.dart';
+import 'package:e_commerce_app/app/shared/models/category_model.dart';
 import 'package:e_commerce_app/app/shared/models/product_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +15,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class ClientPage extends StatefulWidget {
   final String title;
+  final CategoryModel? category;
 
-  const ClientPage({Key? key, this.title = "ClientPage"}) : super(key: key);
+  const ClientPage({Key? key, this.category = null, this.title = "ClientPage"}) : super(key: key);
 
   @override
   ClientPageState createState() => ClientPageState();
@@ -37,6 +39,8 @@ class ClientPageState extends ModularState<ClientPage, ClientStore> {
   @override
   void initState() {
     super.initState();
+    controller.getDados(widget.category);
+
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -58,7 +62,7 @@ class ClientPageState extends ModularState<ClientPage, ClientStore> {
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent) {
         ScaffoldMessenger.of(context).showSnackBar(snackBarLoading);
-        controller.getListProdcut();
+        controller.getListProdcut(widget.category);
       }
     });
   }
@@ -96,7 +100,7 @@ class ClientPageState extends ModularState<ClientPage, ClientStore> {
             Observer(builder: (_) {
               if (controller.refresh) {
                 return InkWell(
-                  onTap: controller.refreshList,
+                  onTap: () {controller.refreshList(widget.category);},
                   child: Container(
                     margin: EdgeInsets.all(20),
                     height: 30,

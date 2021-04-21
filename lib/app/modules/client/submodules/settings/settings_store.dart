@@ -99,7 +99,7 @@ abstract class _SettingsStoreBase with Store {
       await getDados();
       loading = false;
       error = "";
-      clientStore.getDados();
+      clientStore.getDados(null);
     }catch(e){
       error = e.toString();
       loading = false;

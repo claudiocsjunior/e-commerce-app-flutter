@@ -173,15 +173,16 @@ mixin _$ClientStore on _ClientStoreBase, Store {
       AsyncAction('_ClientStoreBase.getListProdcut');
 
   @override
-  Future getListProdcut() {
-    return _$getListProdcutAsyncAction.run(() => super.getListProdcut());
+  Future getListProdcut(CategoryModel? categoryModel) {
+    return _$getListProdcutAsyncAction
+        .run(() => super.getListProdcut(categoryModel));
   }
 
   final _$getDadosAsyncAction = AsyncAction('_ClientStoreBase.getDados');
 
   @override
-  Future getDados() {
-    return _$getDadosAsyncAction.run(() => super.getDados());
+  Future getDados(CategoryModel? categoryModel) {
+    return _$getDadosAsyncAction.run(() => super.getDados(categoryModel));
   }
 
   final _$_ClientStoreBaseActionController =
@@ -210,11 +211,11 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
-  dynamic refreshList() {
+  dynamic refreshList(CategoryModel? categoryModel) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.refreshList');
     try {
-      return super.refreshList();
+      return super.refreshList(categoryModel);
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }

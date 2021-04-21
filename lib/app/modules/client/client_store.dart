@@ -26,7 +26,6 @@ abstract class _ClientStoreBase with Store {
   final ISaleRepository saleRepository;
 
   _ClientStoreBase(this.categoryRepository, this.productRepository, this.saleRepository){
-    getDados();
     getProductsCart();
   }
 
@@ -74,10 +73,10 @@ abstract class _ClientStoreBase with Store {
   }
 
   @action
-  refreshList(){
+  refreshList(CategoryModel? categoryModel){
     refresh = false;
     initStateProduct();
-    getListProdcut();
+    getDados(categoryModel);
   }
 
 
@@ -107,7 +106,7 @@ abstract class _ClientStoreBase with Store {
   }
 
   @action
-  getListProdcut() async{
+  getListProdcut(CategoryModel? categoryModel) async{
     if(lastProduct.reference == null){
       loading = true;
       //products = List<ProductModel>();
@@ -115,7 +114,7 @@ abstract class _ClientStoreBase with Store {
 
     List<ProductModel> productsList = List.generate(0, (index) => ProductModel());
 
-    QuerySnapshot querySnapshot = await productRepository.getAllPaginate(lastProduct.reference == null ? null : lastProduct);
+    QuerySnapshot querySnapshot = await productRepository.getAllPaginate(lastProduct.reference == null ? null : lastProduct, categoryModel);
     for (var productDoc in querySnapshot.docs) {
       DocumentReference categoryReference = productDoc['categoryReference'];
       DocumentSnapshot categorySnapshot = await categoryRepository.getByReference(categoryReference);
@@ -146,14 +145,14 @@ abstract class _ClientStoreBase with Store {
   }
 
   @action
-  getDados() async{
+  getDados(CategoryModel? categoryModel) async{
     userId = authStore.user!.uid;
     email = authStore.user!.email!;
     if(authStore.user!.displayName != null){
       name = authStore.user!.displayName!;
     }
 
-    await getListProdcut();
+    await getListProdcut(categoryModel);
   }
 
   LogOut(){
@@ -166,6 +165,7 @@ abstract class _ClientStoreBase with Store {
   }
 
   toHomePage(){
+    refreshList(null);
     Modular.to.popUntil(ModalRoute.withName('/client/'));
   }
 
@@ -183,6 +183,11 @@ abstract class _ClientStoreBase with Store {
 
   toPayment(){
     Modular.to.pushNamed("/client/cartSales/payment");
+  }
+
+  toHomeByCategory(CategoryModel categoryModel){
+    initStateProduct();
+    Modular.to.pushNamed("/client/productsByCategory", arguments: categoryModel);
   }
 
 }

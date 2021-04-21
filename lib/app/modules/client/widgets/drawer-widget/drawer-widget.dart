@@ -2,6 +2,7 @@ import 'package:e_commerce_app/app/shared/config/background-color.dart';
 import 'package:e_commerce_app/app/shared/config/text-color.dart';
 import 'package:e_commerce_app/app/shared/config/text-size.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class DrawerWidget extends StatelessWidget {
   String name;
@@ -41,26 +42,28 @@ class DrawerWidget extends StatelessWidget {
                         child: Icon(Icons.person),
                       ),
                     ),
-                    Container(
-                        width: 270 * 0.6,
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              name,
-                              style: TextStyle(
-                                  fontSize: TextSize.normal,
-                                  color: TextColor.colorPrimary),
-                            ),
-                            Text(
-                              email,
-                              style: TextStyle(
-                                  fontSize: TextSize.small,
-                                  color: TextColor.colorPrimary),
-                            ),
-                          ],
-                        )),
+                   Observer(builder: (_){
+                     return  Container(
+                         width: 270 * 0.6,
+                         alignment: Alignment.centerLeft,
+                         child: Column(
+                           mainAxisAlignment: MainAxisAlignment.center,
+                           children: [
+                             Text(
+                               name,
+                               style: TextStyle(
+                                   fontSize: TextSize.normal,
+                                   color: TextColor.colorPrimary),
+                             ),
+                             Text(
+                               email,
+                               style: TextStyle(
+                                   fontSize: TextSize.small,
+                                   color: TextColor.colorPrimary),
+                             ),
+                           ],
+                         ));
+                   })
                   ],
                 ),
               ),

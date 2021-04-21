@@ -59,7 +59,7 @@ abstract class _ProductStoreBase with Store {
 
     List<ProductModel> productsList = List.generate(0, (index) => ProductModel());
 
-    QuerySnapshot querySnapshot = await repository.getAllPaginate(lastProduct.reference == null ? null : lastProduct);
+    QuerySnapshot querySnapshot = await repository.getAllPaginate(lastProduct.reference == null ? null : lastProduct, null);
       for (var productDoc in querySnapshot.docs) {
         DocumentReference categoryReference = productDoc['categoryReference'];
         DocumentSnapshot categorySnapshot = await categoryRepository.getByReference(categoryReference);
